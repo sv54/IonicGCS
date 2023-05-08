@@ -7,11 +7,36 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid>
+    <ion-row class="ion-align-items-center" justify-content-center>
+      <ion-item>
+        <img src="assets/icon/profile.png" alt="My Image">
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+      </ion-item>
+    </ion-row>
+    <ion-row justify-content-center>
+      <ion-col size="auto">
+        <ion-label>Login</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center>
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-input type="text" placeholder="Username"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center>
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-input type="password" placeholder="Password"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center>
+      <ion-col size="12" size-md="6">
+        <ion-button expand="block">Login</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
