@@ -5,10 +5,10 @@ const bp = require('body-parser')
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const connection = mysql.createConnection({
-  host: '192.168.1.122',
-  user: 'Desktop2',
-  // host: 'localhost',
-  // user: 'root',
+  // host: '192.168.1.122',
+  // user: 'Desktop2',
+  host: 'localhost',
+  user: 'root',
   password: '',
   database: 'gcs'
 });
