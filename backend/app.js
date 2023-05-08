@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const mysql = require('mysql2')
+const bp = require('body-parser')
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 const connection = mysql.createConnection({
   host: '192.168.1.122',
   user: 'Desktop2',
