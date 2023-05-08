@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
 export class Tab2Page {
 
   constructor() {}
-
+  patients = [
+    { name: 'John Doe', id: '123', image: 'path/to/image' },
+    { name: 'Jane Smith', id: '456', image: 'path/to/image' },
+    { name: 'Bob Johnson', id: '789', image: 'path/to/image' }
+  ];
 }
