@@ -1,19 +1,53 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-grid class="pad20">
+      <ion-row class="ion-align-items-center imagen" style="height: 20%;" justify-content-center>
+        <ion-col>
+        </ion-col>
+        <ion-col>
+            <img src="assets/icon/profile.png" alt="My Image">
+        </ion-col>
+        <ion-col>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center class="ion-margin-top">
+        <ion-col>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-label class="grande">Login</ion-label>
+        </ion-col>
+        <ion-col>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center>
+        <ion-col size="12" size-md="6">
+          <ion-item>
+            <ion-input type="text" placeholder="Email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center>
+        <ion-col size="12" size-md="6">
+          <ion-item>
+            <ion-input type="password" placeholder="Password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center class="ion-margin-top" >
+        <ion-col>
+        </ion-col>
+        <ion-col size="6" size-md="6">
+          <ion-button expand="block">Login</ion-button>
+        </ion-col>
+        <ion-col>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
 </ion-content>
 
 <ion-menu>
