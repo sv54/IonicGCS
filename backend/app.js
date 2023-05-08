@@ -34,13 +34,27 @@ app.get('/medicos', (req, res) => {
   });
 });
 
-app.get('/medicos/:email', (req, res) => {
-  const name = req.params.email;
-  connection.query('SELECT * FROM medicos WHERE email = ? LIMIT 1', [email], (error, results, fields) => {
+app.post('/medicos/login', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.email;
+  connection.query('SELECT * FROM medicos WHERE Email = ? LIMIT 1', [email], (error, results, fields) => {
     if (error) {
       console.error(error);
       res.status(500).send('Error al obtener el médico');
     } else {
+      if (results = []){
+        console.log("email " + email + " no encontrado")
+        res.json("email " + email + " no encontrado");
+
+      }else{
+        if(results[0].Password != password){
+          console.log("password incorrecta")
+          res.json("password incorrecto");
+        }else{
+          res.json("Ok");
+        }
+      }
+      console.log(results)
       res.json(results[0]);
     }
   });
