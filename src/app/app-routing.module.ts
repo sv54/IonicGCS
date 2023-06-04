@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
+    path: 'main-menu',
+    loadChildren: () => import('./main-menu/main-menu.module').then( m => m.MainMenuPageModule)
+  },
+  {
     path: 'paciente/:DNI',
     loadChildren: () => import('./paciente-historial/paciente-historial.module').then( m => m.PacienteHistorialPageModule)
   },

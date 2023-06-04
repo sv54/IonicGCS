@@ -25,14 +25,14 @@
       <ion-row justify-content-center>
         <ion-col size="12" size-md="6">
           <ion-item>
-            <ion-input type="text" placeholder="Email"></ion-input>
+            <ion-input type="text" placeholder="Email" #emailInput></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row justify-content-center>
         <ion-col size="12" size-md="6">
           <ion-item>
-            <ion-input type="password" placeholder="Password"></ion-input>
+            <ion-input type="password" placeholder="Password" #passwordInput></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -40,12 +40,22 @@
         <ion-col>
         </ion-col>
         <ion-col size="6" size-md="6">
-          <ion-button expand="block">Login</ion-button>
+          <ion-button expand="block" (click)="login(emailInput, passwordInput)">Login</ion-button>
         </ion-col>
         <ion-col>
 
         </ion-col>
       </ion-row>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-item *ngIf="errorOccured">
+          <ion-label color="danger">{{ errorMessage }}</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col></ion-col>
+
+    </ion-row>
     </ion-grid>
 
 </ion-content>
