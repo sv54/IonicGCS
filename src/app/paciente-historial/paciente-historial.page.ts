@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-paciente-historial',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PacienteHistorialPage implements OnInit {
 
-  constructor() { }
+  constructor(private storage: StorageService) { }
 
+  patient: any;
   ngOnInit() {
+    this.storage.get("paciente")?.then((value) =>{
+      this.patient = value;
+      console.log("paciente recibido: "+this.patient.DNI);
+    });
   }
 
 }

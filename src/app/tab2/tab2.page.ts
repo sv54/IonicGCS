@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -7,13 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['tab2.page.scss']
 })
 
-export class Tab2Page{
+export class Tab2Page implements OnInit{
   patients: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private storage: StorageService) {}
 
   ngOnInit() {
     this.fetchPatients();
+  }
+
+  redirectPaciente(patient: any){
+    console.log("paciente: "+patient.DNI)
+    this.storage.set("paciente", patient);
+    this.router.navigate(["/paciente/"+patient.DNI]);
   }
 
   fetchPatients() {

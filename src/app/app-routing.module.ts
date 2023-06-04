@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: 'paciente/:DNI',
     loadChildren: () => import('./paciente-historial/paciente-historial.module').then( m => m.PacienteHistorialPageModule)
-  },
+  }
 
 ];
 @NgModule({

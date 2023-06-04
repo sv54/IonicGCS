@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
   <ion-searchbar placeholder="Buscar paciente..."></ion-searchbar>
 
-  <ion-router-link routerLink="/paciente/{{patient.DNI}}" *ngFor="let patient of patients">
+  <a class="nav-link" [routerLink]="['/paciente/']" *ngFor="let patient of patients" (click)="redirectPaciente(patient)">
     <ion-item style="padding-bottom:5px">
       <ion-grid>
         <ion-row>
@@ -28,5 +28,5 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-  </ion-router-link>
+  </a>
 </ion-content>

@@ -1,13 +1,37 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>pacienteHistorial</ion-title>
+    <ion-title>Historial del paciente</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">pacienteHistorial</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  
+  <table style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Nombre</th>
+      <td style="border: 1px solid black; padding: 8px; text-align: center;">{{patient.Nombre}}</td>
+    </tr>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">DNI</th>
+      <td style="border: 1px solid black; padding: 8px; text-align: center;">{{patient.DNI}}</td>
+    </tr>
+  </table>
+  
+  <table style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Medicacion</th>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: center;">a</td>
+    </tr>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Observaciones</th>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: center;">{{patient.observaciones}}</td>
+    </tr>
+  </table>
+  
+
+
 </ion-content>
