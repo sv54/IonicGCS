@@ -50,12 +50,23 @@ app.post('/medicos/login', (req, res) => {
       console.log(results)
 
       if (results.length === 0){
-        res.json("email " + email + " no encontrado");
+        response = {
+          status: "email " + email + " no encontrado",
+        }
+        res.json(response);
       }else{
         if(results[0].Password != password){
-          res.json("password incorrecto");
+          response = {
+            status: "password incorrecto",
+          }
+          res.json(response);
+
         }else{
-          res.json("Ok");
+          response = {
+            status: "Ok",
+            datos: results[0]
+          }
+          res.json(response);
         }
       }
     }

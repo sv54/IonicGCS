@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { StorageService } from '../storage.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ export class Tab1Page {
   errorMessage: string = '';
   errorOccured: boolean = false;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private storage: StorageService) {
   }
 
 
@@ -28,15 +29,23 @@ export class Tab1Page {
 
       this.http.post('http://localhost:3000/medicos/login', requestBody)
       .subscribe(data => {
-        if (data == 'Ok'){
-
+        const response:any = data;
+        if (response.status == 'Ok'){
+          console.log(response.datos)
+          this.storage.set('id', response.datos.Id);
+          this.storage.set('email', emailInput.value);
+          this.storage.set('password', passwordInput.value);
+          this.storage.set('nombre', response.datos.Nombre);
+          this.storage.set('dni', response.datos.DNI);
+          this.storage.set('fechaNac', response.datos.FechaNac);
+          this.storage.get('dni')?.then((value) => {
+            console.log(value);
+          })
         }
         else {
           console.log('no encontrado');
           this.showError();
         }
-
-        console.log(data)
       }, error => {
         console.log(error)
       });
