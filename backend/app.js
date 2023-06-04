@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql2')
 const bp = require('body-parser')
+const cors = require('cors')
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const connection = mysql.createConnection({
@@ -12,7 +13,7 @@ const connection = mysql.createConnection({
   password: '',
   database: 'gcs'
 });
-
+app.use(cors());
 connection.connect((error) => {
   if (error) {
     console.error('Error al conectarse a la base de datos: ' + error.stack);
@@ -82,4 +83,16 @@ app.get('/', function (req, res) {
 
 app.listen(3000, function () {
   console.log('El servidor está escuchando en el puerto 3000');
+});
+
+app.get('/pacientes', (req, res) => {
+  console.log("/pacientes (GET)");
+  connection.query('SELECT * FROM pacientes', (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener los pacientes');
+    } else {
+      res.json(results);
+    }
+  });
 });
