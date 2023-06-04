@@ -1,13 +1,27 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>mainMenu</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mainMenu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="title">DANS UA</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-md="6" offset-md="3">
+        <ion-button expand="full">Botón 1</ion-button>
+        <ion-button expand="full">Botón 2</ion-button>
+        <ion-button expand="full">Botón 3</ion-button>
+        <ion-button expand="full">Botón 4</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
