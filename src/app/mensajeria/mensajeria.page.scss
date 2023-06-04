@@ -1,0 +1,29 @@
+.page-title {
+    text-align: center;
+    font-size: 64px;
+}
+
+.medico {
+    width: 100%;
+    text-align: right;
+}
+
+.paciente {
+    text-align: left;
+}
+
+.custom-button-col {
+    display: flex;
+    align-items: center;
+}
+
+.custom-button {
+    width: 120px; /* Ancho personalizado */
+    margin-left: auto; /* Alinea el botón a la derecha */
+}
+
+.custom-input {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}

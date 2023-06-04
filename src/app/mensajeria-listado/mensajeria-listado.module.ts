@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -14,8 +13,7 @@ import { MensajeriaListadoPage } from './mensajeria-listado.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    MensajeriaListadoPageRoutingModule, 
-    HttpClientModule
+    MensajeriaListadoPageRoutingModule
   ],
   declarations: [MensajeriaListadoPage]
 })

@@ -110,24 +110,35 @@ app.get('/mensajeria-listado', (req, res) => {
 
 app.get('/mensajeria/:id', (req, res) => {
   const paciente = req.params.id
-  const { medico } = req.body
 
-  const query = 'SELECT m.*, p.Nombre, md.Nombre FROM mensajes m, pacientes p, medicos md WHERE m.fk_medico = ' + medico + ' AND m.fk_paciente = ' + paciente + ' AND m.fk_paciente = p.id AND m.fk_medico = md.id;'
-
-  connection.query(query,(error, results, fields) => {
+  var query = 'SELECT fk_medico FROM pacientes WHERE Id = ' + paciente + ';'
+  connection.query(query, (error, results, fields) => {
     if (error) {
       console.error(error)
-      res.status(500).send('Error en el chat con el paciente')
+      res.status(500).send('Error encontrando al médico')
     } 
     else {
-      if (results.lengt == 0) {
-        res.json("No tienes ningún chat abierto")
-      }
-      else {
-        res.json(results)
-      }
+      const medico = results[0].fk_medico
+      query = 'SELECT m.*, p.Nombre, md.Nombre FROM mensajes m, pacientes p, medicos md WHERE m.fk_medico = ' + medico + ' AND m.fk_paciente = ' + paciente + ' AND m.fk_paciente = p.id AND m.fk_medico = md.id;'
+
+      connection.query(query, (error, results, fields) => {
+        if (error) {
+          console.error(error)
+          res.status(500).send('Error en el chat con el paciente')
+        } 
+        else {
+          if (results.lengt == 0) {
+            res.json("No tienes ningún chat abierto")
+          }
+          else {
+            res.json(results)
+          }
+        }
+      })
     }
   })
+
+  
 });
 
 app.post('/mensajeria/:id', (req, res) => {
@@ -135,8 +146,8 @@ app.post('/mensajeria/:id', (req, res) => {
   const { medico, mensaje } = req.body
   const date = moment().format('YYYY-MM-DD HH:mm:ss');
 
-  connection.query('INSERT INTO mensajes (fk_medico, fk_paciente, Mensaje, FechaHora) VALUES (?, ?, ?, ?)',
-    [medico, paciente, mensaje, date], (error, results, fields) => {
+  connection.query('INSERT INTO mensajes (fk_medico, fk_paciente, Remitente, Mensaje, FechaHora) VALUES (?, ?, ?, ?, ?)',
+    [medico, paciente, 1, mensaje, date], (error, results, fields) => {
     if (error) {
       console.error(error)
       res.status(500).send('Error al enviar el mensaje')

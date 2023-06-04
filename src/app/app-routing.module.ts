@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'mensajeria-listado',
     loadChildren: () => import('./mensajeria-listado/mensajeria-listado.module').then( m => m.MensajeriaListadoPageModule)
+  },
+  {
+    path: 'mensajeria/:id',
+    loadChildren: () => import('./mensajeria/mensajeria.module').then( m => m.MensajeriaPageModule)
   }
 ];
 @NgModule({
