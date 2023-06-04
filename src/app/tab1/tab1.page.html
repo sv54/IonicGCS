@@ -46,6 +46,16 @@
 
         </ion-col>
       </ion-row>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-item *ngIf="errorOccured">
+          <ion-label color="danger">{{ errorMessage }}</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col></ion-col>
+
+    </ion-row>
     </ion-grid>
 
 </ion-content>

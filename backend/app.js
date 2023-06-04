@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql2')
 const bp = require('body-parser')
+const cors = require('cors');
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const connection = mysql.createConnection({
@@ -12,6 +13,8 @@ const connection = mysql.createConnection({
   password: '',
   database: 'gcs'
 });
+app.use(cors()); // Habilitar CORS para todas las rutas
+
 
 connection.connect((error) => {
   if (error) {
@@ -44,7 +47,9 @@ app.post('/medicos/login', (req, res) => {
       console.error(error);
       res.status(500).send('Error al obtener el médico');
     } else {
-      if (results == []){
+      console.log(results)
+
+      if (results.length === 0){
         res.json("email " + email + " no encontrado");
       }else{
         if(results[0].Password != password){
