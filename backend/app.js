@@ -119,7 +119,7 @@ app.get('/mensajeria/:id', (req, res) => {
     } 
     else {
       const medico = results[0].fk_medico
-      query = 'SELECT m.*, p.Nombre, md.Nombre FROM mensajes m, pacientes p, medicos md WHERE m.fk_medico = ' + medico + ' AND m.fk_paciente = ' + paciente + ' AND m.fk_paciente = p.id AND m.fk_medico = md.id;'
+      query = 'SELECT m.*, p.Nombre as Paciente, md.Nombre as Medico FROM mensajes m, pacientes p, medicos md WHERE m.fk_medico = ' + medico + ' AND m.fk_paciente = ' + paciente + ' AND m.fk_paciente = p.id AND m.fk_medico = md.id;'
 
       connection.query(query, (error, results, fields) => {
         if (error) {
@@ -143,17 +143,27 @@ app.get('/mensajeria/:id', (req, res) => {
 
 app.post('/mensajeria/:id', (req, res) => {
   const paciente = req.params.id
-  const { medico, mensaje } = req.body
+  const { mensaje } = req.body
   const date = moment().format('YYYY-MM-DD HH:mm:ss');
 
-  connection.query('INSERT INTO mensajes (fk_medico, fk_paciente, Remitente, Mensaje, FechaHora) VALUES (?, ?, ?, ?, ?)',
-    [medico, paciente, 1, mensaje, date], (error, results, fields) => {
+  var query = 'SELECT fk_medico FROM pacientes WHERE Id = ' + paciente + ';'
+  connection.query(query, (error, results, fields) => {
     if (error) {
       console.error(error)
-      res.status(500).send('Error al enviar el mensaje')
+      res.status(500).send('Error encontrando al médico')
     } 
     else {
-      res.json("Mensaje enviado!!")
+      const medico = results[0].fk_medico
+      connection.query('INSERT INTO mensajes (fk_medico, fk_paciente, Remitente, Mensaje, FechaHora) VALUES (?, ?, ?, ?, ?)',
+        [medico, paciente, 1, mensaje, date], (error, results, fields) => {
+        if (error) {
+          console.error(error)
+          res.status(500).send('Error al enviar el mensaje')
+        } 
+        else {
+          res.json("Mensaje enviado!!")
+        }
+      })
     }
   })
 });

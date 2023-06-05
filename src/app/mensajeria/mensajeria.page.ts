@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./mensajeria.page.scss'],
 })
 export class MensajeriaPage implements OnInit {
+  mensajeTexto!: string;
   pacienteId!: number;
   pacienteName!: string;
   mensajes: any[] = [];
@@ -22,14 +23,34 @@ export class MensajeriaPage implements OnInit {
   }
 
   loadMensajes() {
-    // Realiza la solicitud a tu API para obtener los mensajes
+    // Realizamos la solicitud a tu API para obtener los mensajes
     this.http.get<any[]>(`http://localhost:3000/mensajeria/${this.pacienteId}`).subscribe(
       response => {
         this.mensajes = response.map(respuesta => respuesta);
-        this.pacienteName = response[0].Nombre;
+        this.pacienteName = response[0].Paciente;
       },
       error => {
         console.log('Error al obtener los mensajes:', error);
+      }
+    );
+  }
+
+  enviarMensaje() {
+    // Creamos el objeto de datos para enviar en el cuerpo de la solicitud POST
+    const datos = {
+      mensaje: this.mensajeTexto
+    };
+
+    // Realizamos la solicitud POST a la API
+    this.http.post<any>(`http://localhost:3000/mensajeria/${this.pacienteId}`, datos).subscribe(
+      response => {
+        // Manejamos la respuesta de la API
+        console.log('Respuesta de la API:', response);
+        this.loadMensajes();
+      },
+      error => {
+        // Manejamos el error de la API
+        console.error('Error al enviar el mensaje:', error);
       }
     );
   }

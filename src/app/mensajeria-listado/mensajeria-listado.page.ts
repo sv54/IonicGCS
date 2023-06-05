@@ -39,7 +39,7 @@ export class MensajeriaListadoPage implements OnInit {
     } else {
       // Filtra los pacientes por nombre según el criterio de búsqueda
       this.filteredPacientes = this.pacientes.filter(paciente =>
-        paciente.toLowerCase().includes(this.searchFilter.toLowerCase())
+        paciente.Nombre.toLowerCase().includes(this.searchFilter.toLowerCase())
       );
     }
   }

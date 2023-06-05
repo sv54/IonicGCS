@@ -7,16 +7,10 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let mensaje of mensajes">
-      <div *ngIf="mensaje.Remitente; else elseBlock" class="medico">
-          {{ mensaje.Mensaje }}
-      </div>
-
-      <ng-template #elseBlock>
-        <div class="paciente">
-          {{ mensaje.Mensaje }}
-        </div>
-      </ng-template>
-      <br>
+      <div [ngClass]="{'medico': mensaje.Remitente, 'paciente': !mensaje.Remitente}">
+        {{ mensaje.Mensaje }}
+    </div>
+    <br>
     </ion-item>
   </ion-list>
 </ion-content>
@@ -24,11 +18,11 @@
 <ion-footer>
   <ion-toolbar>
     <ion-row>
-      <ion-col>
-        <ion-input placeholder="Escribe tu mensaje" class="custom-input"></ion-input>
+      <ion-col size="10" class="custom-input-col">
+        <textarea placeholder="Escribe tu mensaje" class="custom-input" [(ngModel)]="mensajeTexto"></textarea>
       </ion-col>
-      <ion-col class="custom-button-col">
-        <ion-button class="custom-button" expand="full">Enviar</ion-button>
+      <ion-col size="2" class="custom-button-col">
+        <ion-button class="custom-button" expand="full" (click)="enviarMensaje()">Enviar</ion-button>
       </ion-col>
     </ion-row>
   </ion-toolbar>
