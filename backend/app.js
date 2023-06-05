@@ -106,8 +106,13 @@ app.post('/medicos', (req, res) => {
 });
 
 app.get('/mensajeria-listado', (req, res) => {
-  const { medico } = req.body
-  const query = 'SELECT DISTINCT p.Nombre, p.Id, p.DNI FROM mensajes m, pacientes p WHERE m.fk_medico = ' + 5 + ' AND m.fk_paciente = p.id;'
+  const { medico } = req.query
+
+  const query = 'SELECT p.Nombre, p.Id, p.DNI, m.Mensaje, m.FechaHora ' +
+                'FROM pacientes p ' + 
+                'INNER JOIN mensajes m ON m.fk_paciente = p.Id ' + 
+                'WHERE m.fk_medico = ' + medico + ' AND m.FechaHora = (SELECT MAX(FechaHora) FROM mensajes WHERE fk_paciente = p.Id) ' + 
+                'ORDER BY p.Id';
 
   connection.query(query,(error, results, fields) => {
     if (error) {

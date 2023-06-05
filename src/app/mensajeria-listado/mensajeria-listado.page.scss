@@ -1,4 +1,19 @@
 .page-title {
     text-align: center;
     font-size: 64px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.paciente-item {
+    margin-top: 20px;
+    margin-bottom: 20px; /* Espacio inferior */
+}
+
+.paciente-item:hover {
+    background-color: lightgray;
+}
+
+.mensaje {
+    color: cyan;
 }

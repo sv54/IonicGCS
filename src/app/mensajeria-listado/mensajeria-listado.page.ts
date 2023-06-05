@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-mensajeria-listado',
@@ -14,22 +15,26 @@ export class MensajeriaListadoPage implements OnInit {
 
   searchFilter: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storage: StorageService) { }
 
   ngOnInit() {
-    this.http.get<any[]>('http://localhost:3000/mensajeria-listado').subscribe(
-      response => {
-        // Procesar la respuesta JSON y obtener los nombres de los pacientes
-        const pacientes = response.map(paciente => paciente);
-
-        this.pacientes = pacientes;
-        this.filteredPacientes = pacientes;
-      },
-      error => {
-        console.log('Error al obtener los pacientes:', error);
-      }
-    );
-    //this.filteredPacientes = this.pacientes; // Inicializar con todos los pacientes al cargar la página
+    this.storage.get('id')
+      .then(id => {
+        if (id) {
+          this.http.get<any[]>('http://localhost:3000/mensajeria-listado', { params: {medico: id } }).subscribe(
+            response => {
+              // Procesar la respuesta JSON y obtener los nombres de los pacientes
+              const pacientes = response.map(paciente => paciente);
+              this.pacientes = pacientes;
+              this.filteredPacientes = pacientes;
+            },
+            error => {
+              console.log('Error al obtener los pacientes:', error);
+            }
+          );
+        }
+      })
+      .catch(error => console.error(error));
   }
 
   filtrarPorNombre() {

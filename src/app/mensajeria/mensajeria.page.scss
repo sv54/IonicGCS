@@ -1,6 +1,9 @@
 .page-title {
     text-align: center;
     font-size: 64px;
+
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .medico {
@@ -8,10 +11,12 @@
     width: 100%;
     max-width: 70%;
     text-align: right;
+    color: #67A501;
 }
 
 .paciente {
     text-align: left;
+    color: #0085A0;
 }
 
 .custom-button-col {
