@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
+    path: 'main-menu',
+    loadChildren: () => import('./main-menu/main-menu.module').then( m => m.MainMenuPageModule)
+  },
+  {
     path: 'mensajeria-listado',
     loadChildren: () => import('./mensajeria-listado/mensajeria-listado.module').then( m => m.MensajeriaListadoPageModule)
   },
@@ -14,6 +18,7 @@ const routes: Routes = [
     path: 'mensajeria/:id',
     loadChildren: () => import('./mensajeria/mensajeria.module').then( m => m.MensajeriaPageModule)
   }
+
 ];
 @NgModule({
   imports: [

@@ -5,6 +5,8 @@ const bp = require('body-parser')
 const moment = require('moment')
 const cors = require('cors')
 
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 const connection = mysql.createConnection({
   // host: '192.168.1.122',
   // user: 'Desktop2',
@@ -17,6 +19,8 @@ const connection = mysql.createConnection({
   password: '12345678',
   database: 'gcs'
 });
+app.use(cors()); // Habilitar CORS para todas las rutas
+
 
 connection.connect((error) => {
   if (error) {
@@ -56,13 +60,26 @@ app.post('/medicos/login', (req, res) => {
       console.error(error);
       res.status(500).send('Error al obtener el médico');
     } else {
-      if (results == []){
-        res.json("email " + email + " no encontrado");
+      console.log(results)
+
+      if (results.length === 0){
+        response = {
+          status: "email " + email + " no encontrado",
+        }
+        res.json(response);
       }else{
         if(results[0].Password != password){
-          res.json("password incorrecto");
+          response = {
+            status: "password incorrecto",
+          }
+          res.json(response);
+
         }else{
-          res.json("Ok");
+          response = {
+            status: "Ok",
+            datos: results[0]
+          }
+          res.json(response);
         }
       }
     }
