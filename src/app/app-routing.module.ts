@@ -8,6 +8,10 @@ const routes: Routes = [
   },  {
     path: 'main-menu',
     loadChildren: () => import('./main-menu/main-menu.module').then( m => m.MainMenuPageModule)
+  },
+  {
+    path: 'form-medicamento',
+    loadChildren: () => import('./form-medicamento/form-medicamento.module').then( m => m.FormMedicamentoPageModule)
   }
 
 ];

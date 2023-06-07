@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
   // user: 'Desktop2',
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'root',
   database: 'gcs'
 });
 app.use(cors()); // Habilitar CORS para todas las rutas
@@ -88,6 +88,35 @@ app.post('/medicos', (req, res) => {
         res.status(500).send('Error al insertar el médico');
       } else {
         res.status(200).send('Médico insertado correctamente');
+      }
+    });
+});
+
+//Añadir
+app.post('/formMedicamento/:idPaciente', (req, res) => {
+  console.log(req.body)
+  const nombre = req.body.Nombre;
+  const fechaInicio = req.body.FechaInicio;
+  const fechaFin = req.body.FechaFin;
+  const vecesDia = req.body.VecesDia;
+  const detalles = req.body.Detalles;
+  const idPaciente = req.params.idPaciente;
+
+  console.log(nombre)
+  console.log(fechaInicio)
+  console.log(fechaFin)
+  console.log(vecesDia)
+  console.log(detalles)
+  console.log(idPaciente)
+
+  connection.query('INSERT INTO medicamentos (Nombre, FechaInicio, FechaFin, VecesDia, Detalles, fk_paciente) VALUES (?, ?, ?, ?, ?, ?)',
+    [nombre, fechaInicio, fechaFin, vecesDia, detalles, idPaciente],
+    (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Error al insertar el medicamento');
+      } else {
+        res.status(200).send('Medicamento insertado correctamente');
       }
     });
 });
