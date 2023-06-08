@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController, NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -8,21 +9,19 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./form-medicamento.page.scss'],
 })
 export class FormMedicamentoPage implements OnInit {
-  nombre: string;
-  fechaInicio: string;
-  fechaFin: string;
-  vecesDia: number;
-  detalles: string;
+  nombre!: string;
+  fechaInicio!: string;
+  fechaFin!: string;
+  vecesDia!: number;
+  detalles!: string;
+  pacienteId!: number;
 
-  constructor(private navCtrl: NavController, private http: HttpClient, private toastController: ToastController) {
-    this.nombre = "";
-    this.fechaInicio = "";
-    this.fechaFin = "";
-    this.vecesDia = 0;
-    this.detalles = "";
-  }
+  constructor(private route: ActivatedRoute, private navCtrl: NavController, private http: HttpClient, private toastController: ToastController) {}
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.pacienteId = params['idPaciente'];
+    });
   }
 
   async mostrarMensajeError(mensaje: string) {
@@ -63,9 +62,8 @@ export class FormMedicamentoPage implements OnInit {
       return;
     }
 
-    //Como conseguir valor?
-    const idPaciente = 1; // Reemplaza con el valor del ID del paciente
-
+    const idPaciente = this.pacienteId;
+    
     const medicamento = {
       Nombre: this.nombre,
       FechaInicio: fehcaInicioDate,
@@ -74,7 +72,7 @@ export class FormMedicamentoPage implements OnInit {
       Detalles: this.detalles,
     };
 
-    this.http.post(`/formMedicamento/${idPaciente}`, medicamento)
+    this.http.post<any>(`http://localhost:3000/formMedicamento/${idPaciente}`, medicamento)
       .subscribe(
         (response) => {
           console.log('Medicamento insertado correctamente');
