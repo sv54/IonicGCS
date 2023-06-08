@@ -111,3 +111,34 @@ app.get('/pacientes', (req, res) => {
     }
   });
 });
+
+
+// app.get('/medicamentos', (req, res) => {
+//   console.log("/medicamentos (GET)");
+//   connection.query('SELECT * FROM medicamentos', (error, results, fields) => {
+//     if (error) {
+//       console.error(error);
+//       res.status(500).send('Error al obtener los medicamentos.');
+//     } else {
+//       res.json(results);
+//     }
+//   });
+// }); 
+
+
+app.get('/medicamentos/:paciente', (req, res) => {
+  console.log(`/medicamentos/${req.params.paciente} (GET)`);
+  const paciente = req.params.paciente;
+  connection.query('SELECT * FROM medicamentos WHERE fk_paciente = ?', [paciente], (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener el medicamento.');
+    } else {
+      if (results.length > 0) {
+        res.json(results);
+      } else {
+        res.status(404).send('Medicamento no encontrado.');
+      }
+    }
+  });
+});
