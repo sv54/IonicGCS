@@ -115,11 +115,6 @@ app.post('/formMedicamento/:idPaciente', (req, res) => {
     }
   }); */
 
-  console.log(nombre)
-  console.log(fechaInicio)
-  console.log(fechaFin)
-  console.log(vecesDia)
-  console.log(detalles)
   console.log(idPaciente)
 
   connection.query('INSERT INTO medicamentos (Nombre, FechaInicio, FechaFin, VecesDia, Detalles, fk_paciente) VALUES (?, ?, ?, ?, ?, ?)',
