@@ -1,13 +1,42 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>mainMenu</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="config()">
+        <ion-icon name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mainMenu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid>
+    <ion-row style="margin-top: 10%;">
+      <ion-col>
+        <div class="ion-text-center">
+          <h1 style = font-size:50px>DANS UA</h1>
+        </div>
+      </ion-col>
+
+    </ion-row>
+    <ion-row style="margin-top: 25%;">
+      <ion-col class="ion-margin">
+        <ion-button size="large" expand="block" class="boton-con-icono no-ripple">
+          <ion-icon slot="start" name="people-outline"></ion-icon>
+          Listado Pacientes
+        </ion-button>
+        <ion-button size="large" expand="block" class="boton-con-icono" (click)="agregarPaciente()">
+          <ion-icon slot="start" name="person-add-outline"></ion-icon>
+          Agregar Paciente
+        </ion-button>
+        <ion-button size="large" expand="block" class="boton-con-icono">
+          <ion-icon slot="start" name="chatbox-ellipses-outline"></ion-icon>
+          Mensajería
+        </ion-button>
+        <ion-button size="large" expand="block" class="boton-con-icono">
+          <ion-icon slot="start" name="notifications-outline"></ion-icon>
+          Notificaciones
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from '../storage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,7 @@ export class Tab1Page {
   errorMessage: string = '';
   errorOccured: boolean = false;
 
-  constructor(private http: HttpClient, private storage: StorageService) {
+  constructor(private http: HttpClient, private storage: StorageService, private router: Router) {
   }
 
 
@@ -38,9 +39,12 @@ export class Tab1Page {
           this.storage.set('nombre', response.datos.Nombre);
           this.storage.set('dni', response.datos.DNI);
           this.storage.set('fechaNac', response.datos.FechaNac);
-          this.storage.get('dni')?.then((value) => {
-            console.log(value);
-          })
+          // this.storage.get('dni')?.then((value) => {
+          //   console.log(value);
+          // })
+          this.errorOccured = false;
+          this.router.navigateByUrl('/main-menu')
+
         }
         else {
           console.log('no encontrado');

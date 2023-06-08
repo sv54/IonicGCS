@@ -1,0 +1,14 @@
+.boton-con-icono {
+  margin-top:4%;
+  --padding-start: 10px; /* Ajusta el valor según el espacio deseado */
+  --background: #2196f3;
+  --color: #fff;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.boton-con-icono:hover {
+  --background-hover: #0d8bf0;
+}
