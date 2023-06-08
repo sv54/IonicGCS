@@ -13,7 +13,11 @@ const routes: Routes = [
   {
     path: 'configuration-page',
     loadChildren: () => import('./configuration-page/configuration-page.module').then( m => m.ConfigurationPagePageModule)
+  },  {
+    path: 'agregar-paciente-page',
+    loadChildren: () => import('./agregar-paciente-page/agregar-paciente-page.module').then( m => m.AgregarPacientePagePageModule)
   }
+
 
 ];
 @NgModule({

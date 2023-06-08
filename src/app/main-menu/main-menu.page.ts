@@ -18,4 +18,8 @@ export class MainMenuPage implements OnInit {
   async config(){
     this.router.navigateByUrl('/configuration-page')
   }
+
+  async agregarPaciente(){
+    this.router.navigateByUrl('/agregar-paciente-page')
+  }
 }
