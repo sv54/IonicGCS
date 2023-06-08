@@ -42,6 +42,7 @@ export class Tab1Page {
           // this.storage.get('dni')?.then((value) => {
           //   console.log(value);
           // })
+          this.errorOccured = false;
           this.router.navigateByUrl('/main-menu')
 
         }
