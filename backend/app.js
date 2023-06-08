@@ -93,7 +93,7 @@ app.post('/medicos', (req, res) => {
 });
 
 //Añadir
-app.post('/formMedicamento/:idPaciente', (req, res) => {
+app.post('/formMedicamento/:idPaciente/agregar', (req, res) => {
   console.log(req.body)
   const nombre = req.body.Nombre;
   const fechaInicio = req.body.FechaInicio;
@@ -129,6 +129,63 @@ app.post('/formMedicamento/:idPaciente', (req, res) => {
     });
 });
 
+// Obtener datos iniciales del medicamento
+app.get('/formMedicamento/:idMedicamento', (req, res) => {
+  const idMedicamento = req.params.idMedicamento;
+
+  connection.query('SELECT * FROM medicamentos WHERE Id = ?', [idMedicamento], (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener los datos del medicamento');
+    } else {
+      if (results.length > 0) {
+        const medicamento = results[0];
+        res.status(200).json(medicamento);
+      } else {
+        res.status(404).send('Medicamento no encontrado');
+      }
+    }
+  });
+});
+
+// Editar
+app.put('/formMedicamento/:idMedicamento/editar', (req, res) => {
+  const idMedicamento = req.params.id;
+  const nombre = req.body.Nombre;
+  const fechaInicio = req.body.FechaInicio;
+  const fechaFin = req.body.FechaFin;
+  const vecesDia = req.body.VecesDia;
+  const detalles = req.body.Detalles;
+  const idPaciente = req.body.idPaciente;
+
+  connection.query('UPDATE medicamentos SET Nombre = ?, FechaInicio = ?, FechaFin = ?, VecesDia = ?, Detalles = ?, fk_paciente = ? WHERE Id = ?',
+    [nombre, fechaInicio, fechaFin, vecesDia, detalles, idPaciente, idMedicamento],
+    (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Error al editar el medicamento');
+      } else {
+        res.status(200).send('Medicamento editado correctamente');
+      }
+    });
+});
+
+// Eliminar
+app.delete('/formMedicamento/:id', (req, res) => {
+  const idMedicamento = req.params.id;
+
+  connection.query('DELETE FROM medicamentos WHERE Id = ?',
+    [idMedicamento],
+    (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Error al eliminar el medicamento');
+      } else {
+        res.status(200).send('Medicamento eliminado correctamente');
+      }
+    });
+});
+
 app.get('/', function (req, res) {
   res.send('Hola, mundo!');
 });
@@ -136,3 +193,4 @@ app.get('/', function (req, res) {
 app.listen(3000, function () {
   console.log('El servidor está escuchando en el puerto 3000');
 });
+

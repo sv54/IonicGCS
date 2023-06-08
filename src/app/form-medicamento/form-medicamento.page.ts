@@ -14,7 +14,10 @@ export class FormMedicamentoPage implements OnInit {
   fechaFin!: string;
   vecesDia!: number;
   detalles!: string;
+
   pacienteId!: number;
+  medicamentoId!: number;
+  modo!: string;
 
   constructor(private route: ActivatedRoute, private navCtrl: NavController, private http: HttpClient, private toastController: ToastController) {}
 
@@ -22,6 +25,20 @@ export class FormMedicamentoPage implements OnInit {
     this.route.params.subscribe(params => {
       this.pacienteId = params['idPaciente'];
     });
+
+    this.route.params.subscribe(params => {
+      this.medicamentoId = params['idMedicamento'];
+    });
+
+    this.route.paramMap.subscribe((params) => {
+      const modoParam = params.get('modo');
+      this.modo = modoParam === 'editar' ? 'editar' : 'agregar';
+    });
+
+    if(this.modo === 'editar'){
+      const idMedicamento = this.route.snapshot.paramMap.get('idMedicamento');
+      this.getMedicamento(idMedicamento);
+    }
   }
 
   async mostrarMensajeError(mensaje: string) {
@@ -49,11 +66,12 @@ export class FormMedicamentoPage implements OnInit {
   }
 
   agregarMedicamento() {
+
+    //VALIDACIONES
     if (this.vecesDia <= 0 || !Number.isInteger(this.vecesDia)) {
       this.mostrarMensajeError('El número de días debe ser un valor entero positivo');      return;
     }
 
-    // Validar que la fecha de inicio sea menor que la fecha de fin
     const fehcaInicioDate = new Date(this.fechaInicio);
     const fechaFinDate = new Date(this.fechaFin);
 
@@ -62,17 +80,46 @@ export class FormMedicamentoPage implements OnInit {
       return;
     }
 
+    //PARAMETROS
     const idPaciente = this.pacienteId;
-    
-    const medicamento = {
-      Nombre: this.nombre,
-      FechaInicio: fehcaInicioDate,
-      FechaFin: fechaFinDate,
-      VecesDia: this.vecesDia,
-      Detalles: this.detalles,
-    };
+    const idMedicamento = this.medicamentoId;
 
-    this.http.post<any>(`http://localhost:3000/formMedicamento/${idPaciente}`, medicamento)
+    //FECHAS INICIO FORMATO
+    const anyo = fehcaInicioDate.getFullYear().toString();
+    let mes = (fehcaInicioDate.getMonth() + 1).toString();
+    if (mes.length === 1) {
+      mes = '0' + mes;
+    }
+    let dia = fehcaInicioDate.getDate().toString();
+    if (dia.length === 1) {
+      dia = '0' + dia;
+    }
+    const fechaFormateadaI = anyo + '-' + mes + '-' + dia;
+
+    //FECHA FINAL FORMATO
+    const anyo2 = fechaFinDate.getFullYear().toString();
+    let mes2 = (fechaFinDate.getMonth() + 1).toString();
+    if (mes2.length === 1) {
+      mes2 = '0' + mes2;
+    }
+    let dia2 = fechaFinDate.getDate().toString();
+    if (dia2.length === 1) {
+      dia2 = '0' + dia2;
+    }
+    const fechaFormateadaF = anyo2 + '-' + mes2 + '-' + dia2;
+
+
+    if (this.modo === 'agregar') {
+      //CONSTRUCTOR
+      const medicamento = {
+        Nombre: this.nombre,
+        FechaInicio: fechaFormateadaI,
+        FechaFin: fechaFormateadaF,
+        VecesDia: this.vecesDia,
+        Detalles: this.detalles,
+      };
+
+      this.http.post<any>(`http://localhost:3000/formMedicamento/${idPaciente}/agregar`, medicamento)
       .subscribe(
         (response) => {
           console.log('Medicamento insertado correctamente');
@@ -86,9 +133,46 @@ export class FormMedicamentoPage implements OnInit {
           this.mostrarMensajeError('Error al insertar el medicamento');
         }
       );
+    } else if (this.modo === 'editar') {
+      //SELECT medicamento
+      //GetDatos -> Cargar al formulario -> PacienteID get
 
-    //ID_paciente
+      getMedicamento(idMedicamento: string) {
+        this.http.get(`/formMedicamento/${idMedicamento}`).subscribe(
+          (data: any) => {
+            this.medicamento = data;
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      }
+
+      //CONSTRUCTOR
+      const medicamento = {
+        Nombre: this.nombre,
+        FechaInicio: fechaFormateadaI,
+        FechaFin: fechaFormateadaF,
+        VecesDia: this.vecesDia,
+        Detalles: this.detalles,
+      };
+
+      this.http.put<any>(`http://localhost:3000/formMedicamento/${idMedicamento}/editar`, medicamento)
+      .subscribe(
+        (response) => {
+          console.log('Medicamento insertado correctamente');
+          this.mostrarMensajeExito('Medicamento/Actividad insertad@ correctamente');
+          this.redirigirAPagina();
+        },
+        (error) => {
+          console.log(medicamento)
+          console.log(idPaciente)
+          console.error('Error al insertar el medicamento', error);
+          this.mostrarMensajeError('Error al insertar el medicamento');
+        }
+      );
+    }
+
     //Hacer constructor para cargar el editar con los valores
-    //Arreglar llamada form-medicamentos/1 (que no pilla parametro)
   }
 }
