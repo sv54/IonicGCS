@@ -19,7 +19,19 @@ export class MainMenuPage implements OnInit {
     this.router.navigateByUrl('/configuration-page')
   }
 
+  async pacientes(){
+    this.router.navigateByUrl('/tabs/tab2')
+  }
+
   async agregarPaciente(){
     this.router.navigateByUrl('/agregar-paciente-page')
+  }
+
+  async mensajeria(){
+    this.router.navigateByUrl('/mensajeria-listado')
+  }
+
+  async notificaciones(){
+    this.router.navigateByUrl('/')
   }
 }
