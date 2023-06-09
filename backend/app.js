@@ -180,8 +180,8 @@ app.put('/formMedicamento/:idMedicamento/editar', (req, res) => {
 });
 
 // Eliminar
-app.delete('/formMedicamento/:id', (req, res) => {
-  const idMedicamento = req.params.id;
+app.delete('/formMedicamento/:idMedicamento', (req, res) => {
+  const idMedicamento = req.params.idMedicamento;
 
   connection.query('DELETE FROM medicamentos WHERE Id = ?',
     [idMedicamento],

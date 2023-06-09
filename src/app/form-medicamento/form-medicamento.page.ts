@@ -18,6 +18,7 @@ export class FormMedicamentoPage implements OnInit {
   pacienteId!: number;
   medicamentoId!: number;
   modo!: string;
+  medicamento!: any;
 
   constructor(private route: ActivatedRoute, private navCtrl: NavController, private http: HttpClient, private toastController: ToastController) {}
 
@@ -36,8 +37,10 @@ export class FormMedicamentoPage implements OnInit {
     });
 
     if(this.modo === 'editar'){
-      const idMedicamento = this.route.snapshot.paramMap.get('idMedicamento');
-      this.getMedicamento(idMedicamento);
+      const idMedicamentoEdit = this.route.snapshot.paramMap.get('idMedicamento');
+      if (idMedicamentoEdit) {
+        this.getMedicamento(idMedicamentoEdit);
+      }
     }
   }
 
@@ -63,6 +66,18 @@ export class FormMedicamentoPage implements OnInit {
 
   redirigirAPagina() {
     this.navCtrl.navigateForward('/tabs/tab2');
+  }
+
+  //Petición al back para pillar los datos previos
+  getMedicamento(idMedicamento: string) {
+    this.http.get(`/formMedicamento/${idMedicamento}`).subscribe(
+      (data: any) => {
+        this.medicamento = data;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   agregarMedicamento() {
@@ -134,30 +149,9 @@ export class FormMedicamentoPage implements OnInit {
         }
       );
     } else if (this.modo === 'editar') {
-      //SELECT medicamento
-      //GetDatos -> Cargar al formulario -> PacienteID get
+      //Variable medicamento.
 
-      getMedicamento(idMedicamento: string) {
-        this.http.get(`/formMedicamento/${idMedicamento}`).subscribe(
-          (data: any) => {
-            this.medicamento = data;
-          },
-          (error) => {
-            console.error(error);
-          }
-        );
-      }
-
-      //CONSTRUCTOR
-      const medicamento = {
-        Nombre: this.nombre,
-        FechaInicio: fechaFormateadaI,
-        FechaFin: fechaFormateadaF,
-        VecesDia: this.vecesDia,
-        Detalles: this.detalles,
-      };
-
-      this.http.put<any>(`http://localhost:3000/formMedicamento/${idMedicamento}/editar`, medicamento)
+      this.http.put<any>(`http://localhost:3000/formMedicamento/${idMedicamento}/editar`, this.medicamento)
       .subscribe(
         (response) => {
           console.log('Medicamento insertado correctamente');
@@ -165,14 +159,11 @@ export class FormMedicamentoPage implements OnInit {
           this.redirigirAPagina();
         },
         (error) => {
-          console.log(medicamento)
-          console.log(idPaciente)
+          console.log(this.medicamento)
           console.error('Error al insertar el medicamento', error);
           this.mostrarMensajeError('Error al insertar el medicamento');
         }
       );
     }
-
-    //Hacer constructor para cargar el editar con los valores
   }
 }

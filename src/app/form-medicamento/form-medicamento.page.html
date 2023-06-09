@@ -15,23 +15,23 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="floating">Nombre</ion-label> <br>
-        <ion-input type="text" [(ngModel)]="nombre" required></ion-input>
+        <ion-input type="text" [(ngModel)]="medicamento.nombre" required></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Fecha de Inicio</ion-label> <br>
-        <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fechaInicio" required></ion-datetime>
+        <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="medicamento.fechaInicio" required></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Fecha de Fin</ion-label> <br>
-        <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fechaFin" required></ion-datetime>
+        <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="medicamento.fechaFin" required></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Veces al día</ion-label> <br>
-        <ion-input [(ngModel)]="vecesDia" required type="number" min="0"></ion-input>
+        <ion-input [(ngModel)]="medicamento.vecesDia" required type="number" min="0"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Detalles</ion-label> <br>
-        <ion-textarea [(ngModel)]="detalles"></ion-textarea>
+        <ion-textarea [(ngModel)]="medicamento.detalles"></ion-textarea>
       </ion-item>
     </ion-card-content>
   </ion-card>
