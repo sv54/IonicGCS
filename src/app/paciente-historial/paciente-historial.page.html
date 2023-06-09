@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Historial del paciente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <table style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Nombre</th>
+      <td style="border: 1px solid black; padding: 8px; text-align: center;">{{patient.Nombre}}</td>
+    </tr>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">DNI</th>
+      <td style="border: 1px solid black; padding: 8px; text-align: center;">{{patient.DNI}}</td>
+    </tr>
+  </table>
+  <div style="overflow-x: auto;">
+    <table style="border-collapse: collapse; width: 100%;">
+      <tr>
+        <th style="border: 1px solid black; padding: 8px; text-align: center;">Medicamentos
+          <ion-button [routerLink]="['/form-medicamento', patient.Id, 'agregar']" *ngIf="Editar" shape="round" size="small" color="success" style="font-size: 8px; margin: 1px;">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </th>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+          <ng-container *ngFor="let medicamento of medicamentos">
+            <div style="white-space: pre-line; font-size: 14px;">
+
+              <ion-button *ngIf="Editar" shape="round" size="small" color="danger" style="font-size: 8px; padding:1px;margin: 1px;">
+                <ion-icon name="remove"></ion-icon>
+              </ion-button>
+
+              <strong>{{medicamento.Nombre}}</strong>
+
+              <ion-button [routerLink]="['/form-medicamento', medicamento.Id, 'editar']" *ngIf="Editar" shape="round" size="small" color="warning" style="font-size: 8px; padding:1px;margin: 1px;">
+                <ion-icon name="pencil"></ion-icon>
+              </ion-button>
+
+              <br>
+              {{medicamento.FechaInicio | date: 'yyyy-MM-dd'}} - {{medicamento.FechaFin | date: 'yyyy-MM-dd'}}<br>
+              <strong>Veces al día:</strong> {{medicamento.VecesDia}}<br>
+              <strong>Detalles:</strong> {{medicamento.Detalles}}<br>
+              <br>
+            </div>
+          </ng-container>
+        </td>
+      </tr>
+      <tr>
+        <th style="border: 1px solid black; padding: 8px; text-align: center;">Observaciones</th>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">{{patient.observaciones}}
+          <ion-button *ngIf="Editar" shape="round" size="small" color="warning" style="font-size: 8px; padding:1px;margin: 1px;">
+            <ion-icon name="pencil"></ion-icon>
+          </ion-button>
+          
+        </td>
+      </tr>
+    </table>
+    
+  <div style="text-align:center">
+    <br>
+    <ion-button (click)="toggleEditar()">Editar</ion-button>
+    <br>
+    <br>
+    <ion-button >Enviar mensaje</ion-button>
+  </div>
+  </div>
+  
+</ion-content>

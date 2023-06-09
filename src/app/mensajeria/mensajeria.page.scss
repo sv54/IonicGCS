@@ -1,0 +1,45 @@
+.page-title {
+    text-align: center;
+    font-size: 64px;
+
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.medico {
+    margin-left: auto;
+    width: 100%;
+    max-width: 70%;
+    text-align: right;
+    color: #67A501;
+}
+
+.paciente {
+    text-align: left;
+    color: #0085A0;
+}
+
+.custom-button-col {
+    display: flex;
+    align-items: center;
+}
+
+.custom-button {
+    width: 120px; /* Ancho personalizado */
+    margin-left: auto; /* Alinea el botón a la derecha */
+    margin-bottom: 50px;
+    margin-right: 100px;
+}
+
+.custom-input {  
+    width: 90%;
+    height: 150px;
+    margin-left: 100px;
+    margin-bottom: 50px;
+    resize: none;
+}
+
+.custom-input-col {
+    display: flex;
+    align-items: center;
+}

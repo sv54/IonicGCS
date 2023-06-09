@@ -17,6 +17,26 @@ const routes: Routes = [
   {
     path: 'form-medicamento/:idMedicamento/editar',
     loadChildren: () => import('./form-medicamento/form-medicamento.module').then( m => m.FormMedicamentoPageModule)
+  },
+  {
+    path: 'paciente/:DNI',
+    loadChildren: () => import('./paciente-historial/paciente-historial.module').then( m => m.PacienteHistorialPageModule)
+  },
+  {
+    path: 'configuration-page',
+    loadChildren: () => import('./configuration-page/configuration-page.module').then( m => m.ConfigurationPagePageModule)
+  },
+  {
+    path: 'agregar-paciente-page',
+    loadChildren: () => import('./agregar-paciente-page/agregar-paciente-page.module').then( m => m.AgregarPacientePagePageModule)
+  },
+  {
+    path: 'mensajeria-listado',
+    loadChildren: () => import('./mensajeria-listado/mensajeria-listado.module').then( m => m.MensajeriaListadoPageModule)
+  },
+  {
+    path: 'mensajeria/:id',
+    loadChildren: () => import('./mensajeria/mensajeria.module').then( m => m.MensajeriaPageModule)
   }
 ];
 @NgModule({

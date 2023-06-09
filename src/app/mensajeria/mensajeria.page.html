@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="page-title">{{ pacienteName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let mensaje of mensajes">
+      <div [ngClass]="{'medico': mensaje.Remitente, 'paciente': !mensaje.Remitente}">
+        {{ mensaje.Mensaje }}
+    </div>
+    <br>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col size="10" class="custom-input-col">
+        <textarea placeholder="Escribe tu mensaje" class="custom-input" [(ngModel)]="mensajeTexto"></textarea>
+      </ion-col>
+      <ion-col size="2" class="custom-button-col">
+        <ion-button class="custom-button" expand="full" (click)="enviarMensaje()">Enviar</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
