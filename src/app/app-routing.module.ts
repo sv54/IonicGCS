@@ -11,6 +11,20 @@ const routes: Routes = [
     loadChildren: () => import('./main-menu/main-menu.module').then( m => m.MainMenuPageModule)
   },
   {
+    path: 'form-medicamento/:idPaciente/agregar',
+    data: {
+      modo: 'agregar'
+    },
+    loadChildren: () => import('./form-medicamento/form-medicamento.module').then( m => m.FormMedicamentoPageModule)
+  },
+  {
+    path: 'form-medicamento/:idMedicamento/editar',
+    data: {
+      modo: 'editar'
+    },
+    loadChildren: () => import('./form-medicamento/form-medicamento.module').then( m => m.FormMedicamentoPageModule)
+  },
+  {
     path: 'paciente/:DNI',
     loadChildren: () => import('./paciente-historial/paciente-historial.module').then( m => m.PacienteHistorialPageModule)
   },

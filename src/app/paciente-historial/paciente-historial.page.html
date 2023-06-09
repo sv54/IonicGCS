@@ -29,7 +29,7 @@
           <ng-container *ngFor="let medicamento of medicamentos">
             <div style="white-space: pre-line; font-size: 14px;">
 
-              <ion-button *ngIf="Editar" shape="round" size="small" color="danger" style="font-size: 8px; padding:1px;margin: 1px;">
+              <ion-button *ngIf="Editar" (click)="eliminarMedicamento(medicamento.Id)" shape="round" size="small" color="danger" style="font-size: 8px; padding:1px;margin: 1px;">
                 <ion-icon name="remove"></ion-icon>
               </ion-button>
 
