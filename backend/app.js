@@ -111,29 +111,14 @@ app.post('/formMedicamento/:idPaciente/agregar', (req, res) => {
   const detalles = req.body.Detalles;
   const idPaciente = req.params.idPaciente;
 
-  /**
-  var query = 'SELECT fk_medico FROM pacientes WHERE Id = ' + idPaciente + ';'
-  
-  connection.query(query, (error, results, fields) => {
-    if (error) {
-      console.error(error)
-      res.status(500).send('Error encontrando al paciente');
-    } 
-    else {
-
-    }
-  }); */
-
-  console.log(idPaciente)
-
   connection.query('INSERT INTO medicamentos (Nombre, FechaInicio, FechaFin, VecesDia, Detalles, fk_paciente) VALUES (?, ?, ?, ?, ?, ?)',
     [nombre, fechaInicio, fechaFin, vecesDia, detalles, idPaciente],
     (error, results, fields) => {
       if (error) {
         console.error(error);
-        res.status(500).send('Error al insertar el medicamento PENE');
+        res.status(500).json({ message: 'Error al insertar el medicamento' });
       } else {
-        res.status(200).send('Medicamento insertado correctamente');
+        res.status(200).json({ message: 'Medicamento insertado correctamente' });
       }
     });
 });
@@ -142,6 +127,7 @@ app.post('/formMedicamento/:idPaciente/agregar', (req, res) => {
 app.get('/formMedicamento/:idMedicamento', (req, res) => {
   const idMedicamento = req.params.idMedicamento;
 
+  console.log('PP: ', idMedicamento);
   connection.query('SELECT * FROM medicamentos WHERE Id = ?', [idMedicamento], (error, results, fields) => {
     if (error) {
       console.error(error);

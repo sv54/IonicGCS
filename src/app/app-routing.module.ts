@@ -12,10 +12,16 @@ const routes: Routes = [
   },
   {
     path: 'form-medicamento/:idPaciente/agregar',
+    data: {
+      modo: 'agregar'
+    },
     loadChildren: () => import('./form-medicamento/form-medicamento.module').then( m => m.FormMedicamentoPageModule)
   },
   {
     path: 'form-medicamento/:idMedicamento/editar',
+    data: {
+      modo: 'editar'
+    },
     loadChildren: () => import('./form-medicamento/form-medicamento.module').then( m => m.FormMedicamentoPageModule)
   },
   {

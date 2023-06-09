@@ -31,15 +31,15 @@ export class FormMedicamentoPage implements OnInit {
       this.medicamentoId = params['idMedicamento'];
     });
 
-    this.route.paramMap.subscribe((params) => {
-      const modoParam = params.get('modo');
-      this.modo = modoParam === 'editar' ? 'editar' : 'agregar';
+    this.route.data.subscribe((data: any) => {
+      this.modo = data.modo;
+      console.log(this.modo);
     });
 
     if(this.modo === 'editar'){
       const idMedicamentoEdit = this.route.snapshot.paramMap.get('idMedicamento');
       if (idMedicamentoEdit) {
-        this.getMedicamento(idMedicamentoEdit);
+        this.getMedicamento(idMedicamentoEdit.toString());
       }
     }
   }
@@ -81,7 +81,6 @@ export class FormMedicamentoPage implements OnInit {
   }
 
   agregarMedicamento() {
-
     //VALIDACIONES
     if (this.vecesDia <= 0 || !Number.isInteger(this.vecesDia)) {
       this.mostrarMensajeError('El número de días debe ser un valor entero positivo');      return;
@@ -134,22 +133,23 @@ export class FormMedicamentoPage implements OnInit {
         Detalles: this.detalles,
       };
 
-      this.http.post<any>(`http://localhost:3000/formMedicamento/${idPaciente}/agregar`, medicamento)
+      this.http.post(`http://localhost:3000/formMedicamento/${idPaciente}/agregar`, medicamento, { responseType: 'text' })
       .subscribe(
-        (response) => {
-          console.log('Medicamento insertado correctamente');
+        (response: any) => {
+          console.log(response);
           this.mostrarMensajeExito('Medicamento/Actividad insertad@ correctamente');
           this.redirigirAPagina();
         },
-        (error) => {
-          console.log(medicamento)
-          console.log(idPaciente)
+        (error: any) => {
           console.error('Error al insertar el medicamento', error);
           this.mostrarMensajeError('Error al insertar el medicamento');
         }
       );
     } else if (this.modo === 'editar') {
       //Variable medicamento.
+      console.log('PP: ', idMedicamento);
+
+      console.log('AA: ', this.medicamento);
 
       this.http.put<any>(`http://localhost:3000/formMedicamento/${idMedicamento}/editar`, this.medicamento)
       .subscribe(
