@@ -33,7 +33,6 @@ export class FormMedicamentoPage implements OnInit {
 
     this.route.data.subscribe((data: any) => {
       this.modo = data.modo;
-      console.log(this.modo);
     });
 
     if(this.modo === 'editar'){
@@ -70,9 +69,19 @@ export class FormMedicamentoPage implements OnInit {
 
   //Petición al back para pillar los datos previos
   getMedicamento(idMedicamento: string) {
-    this.http.get(`/formMedicamento/${idMedicamento}`).subscribe(
+    this.http.get(`http://localhost:3000/formMedicamento/${idMedicamento}`).subscribe(
       (data: any) => {
         this.medicamento = data;
+        /**console.log(this.medicamento);
+
+        var fechaCorregidaI = new Date(this.medicamento.FechaInicio);
+        fechaCorregidaI.setDate(fechaCorregidaI.getDate() + 1);
+
+        var fechaCorregidaF = new Date(this.medicamento.FechaFin);
+        fechaCorregidaF.setDate(fechaCorregidaF.getDate() + 1);
+
+        this.medicamento.FechaFin = fechaCorregidaF;
+        this.medicamento.FechaInicio = fechaCorregidaI;*/
       },
       (error) => {
         console.error(error);
@@ -81,9 +90,19 @@ export class FormMedicamentoPage implements OnInit {
   }
 
   agregarMedicamento() {
+    //Cargar valores
+    if(this.modo === 'editar'){
+      this.nombre = this.medicamento.Nombre;
+      this.fechaInicio = this.medicamento.FechaInicio;
+      this.fechaFin = this.medicamento.FechaFin;
+      this.vecesDia = this.medicamento.VecesDia;
+      this.detalles = this.medicamento.Detalles;
+    }
+
     //VALIDACIONES
     if (this.vecesDia <= 0 || !Number.isInteger(this.vecesDia)) {
-      this.mostrarMensajeError('El número de días debe ser un valor entero positivo');      return;
+      this.mostrarMensajeError('El número de días debe ser un valor entero positivo');
+      return;
     }
 
     const fehcaInicioDate = new Date(this.fechaInicio);
@@ -100,7 +119,7 @@ export class FormMedicamentoPage implements OnInit {
 
     //FECHAS INICIO FORMATO
     const anyo = fehcaInicioDate.getFullYear().toString();
-    let mes = (fehcaInicioDate.getMonth() + 1).toString();
+    let mes = (fehcaInicioDate.getMonth() +1).toString();
     if (mes.length === 1) {
       mes = '0' + mes;
     }
@@ -112,7 +131,7 @@ export class FormMedicamentoPage implements OnInit {
 
     //FECHA FINAL FORMATO
     const anyo2 = fechaFinDate.getFullYear().toString();
-    let mes2 = (fechaFinDate.getMonth() + 1).toString();
+    let mes2 = (fechaFinDate.getMonth() +1).toString();
     if (mes2.length === 1) {
       mes2 = '0' + mes2;
     }
@@ -121,7 +140,6 @@ export class FormMedicamentoPage implements OnInit {
       dia2 = '0' + dia2;
     }
     const fechaFormateadaF = anyo2 + '-' + mes2 + '-' + dia2;
-
 
     if (this.modo === 'agregar') {
       //CONSTRUCTOR
@@ -136,7 +154,6 @@ export class FormMedicamentoPage implements OnInit {
       this.http.post(`http://localhost:3000/formMedicamento/${idPaciente}/agregar`, medicamento, { responseType: 'text' })
       .subscribe(
         (response: any) => {
-          console.log(response);
           this.mostrarMensajeExito('Medicamento/Actividad insertad@ correctamente');
           this.redirigirAPagina();
         },
@@ -146,22 +163,26 @@ export class FormMedicamentoPage implements OnInit {
         }
       );
     } else if (this.modo === 'editar') {
-      //Variable medicamento.
-      console.log('PP: ', idMedicamento);
+      //CONSTRUCTOR
+      const medicamentoEdit = {
+        Nombre: this.nombre,
+        FechaInicio: fechaFormateadaI,
+        FechaFin: fechaFormateadaF,
+        VecesDia: this.vecesDia,
+        Detalles: this.detalles,
+        idPaciente: this.medicamento.fk_paciente,
+      };
 
-      console.log('AA: ', this.medicamento);
-
-      this.http.put<any>(`http://localhost:3000/formMedicamento/${idMedicamento}/editar`, this.medicamento)
+      this.http.put(`http://localhost:3000/formMedicamento/${idMedicamento}/editar`, medicamentoEdit, { responseType: 'text' })
       .subscribe(
-        (response) => {
-          console.log('Medicamento insertado correctamente');
+        (response: any) => {
+          console.log('Medicamento editado correctamente');
           this.mostrarMensajeExito('Medicamento/Actividad insertad@ correctamente');
           this.redirigirAPagina();
         },
-        (error) => {
-          console.log(this.medicamento)
-          console.error('Error al insertar el medicamento', error);
-          this.mostrarMensajeError('Error al insertar el medicamento');
+        (error: any) => {
+          console.error('Error al editar el medicamento', error);
+          this.mostrarMensajeError('Error al editar el medicamento');
         }
       );
     }

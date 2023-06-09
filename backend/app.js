@@ -103,7 +103,6 @@ app.post('/medicos', (req, res) => {
 
 //Añadir
 app.post('/formMedicamento/:idPaciente/agregar', (req, res) => {
-  console.log(req.body)
   const nombre = req.body.Nombre;
   const fechaInicio = req.body.FechaInicio;
   const fechaFin = req.body.FechaFin;
@@ -127,7 +126,6 @@ app.post('/formMedicamento/:idPaciente/agregar', (req, res) => {
 app.get('/formMedicamento/:idMedicamento', (req, res) => {
   const idMedicamento = req.params.idMedicamento;
 
-  console.log('PP: ', idMedicamento);
   connection.query('SELECT * FROM medicamentos WHERE Id = ?', [idMedicamento], (error, results, fields) => {
     if (error) {
       console.error(error);
@@ -145,7 +143,8 @@ app.get('/formMedicamento/:idMedicamento', (req, res) => {
 
 // Editar
 app.put('/formMedicamento/:idMedicamento/editar', (req, res) => {
-  const idMedicamento = req.params.id;
+  const idMedicamento = req.params.idMedicamento;
+
   const nombre = req.body.Nombre;
   const fechaInicio = req.body.FechaInicio;
   const fechaFin = req.body.FechaFin;
@@ -166,7 +165,7 @@ app.put('/formMedicamento/:idMedicamento/editar', (req, res) => {
 });
 
 // Eliminar
-app.delete('/formMedicamento/:idMedicamento', (req, res) => {
+app.delete('/formMedicamento/:idMedicamento/eliminar', (req, res) => {
   const idMedicamento = req.params.idMedicamento;
 
   connection.query('DELETE FROM medicamentos WHERE Id = ?',
