@@ -9,29 +9,36 @@
 
 <ion-content>
   <ion-list style="margin: 3%;">
-    <ion-item style="margin-top: 3%;">
-      <ion-label position="stacked">Nombre y apellidos</ion-label>
-      <ion-input type="text"></ion-input>
+    <ion-item style="margin-top: 3%;" >
+      <ion-input label="Nombre y Apellidos" labelPlacement="stacked" #nombreInput></ion-input>
     </ion-item>
 
     <ion-item style="margin-top: 3%;">
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input type="email"></ion-input>
+      <ion-input type="email" label="Email" labelPlacement="stacked" #email></ion-input>
+    </ion-item>
+
+    <ion-item style="margin-top: 3%;" >
+      <ion-input type="text" label="DNI" labelPlacement="stacked" #dni></ion-input>
     </ion-item>
 
     <ion-item style="margin-top: 3%;">
-      <ion-label position="stacked">DNI</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-
-    <ion-item style="margin-top: 3%;">
-      <ion-label position="stacked" placeholder="Fecha de nacimiento"></ion-label>
-      <ion-datetime presentation="date" display-format="DD/MM/YYYY" picker-format="DD/MM/YYYY"></ion-datetime>
+      <ion-input label="Fecha de Nacimiento" labelPlacement="stacked" type="date" #fechaNac></ion-input>
     </ion-item>
 
   </ion-list>
 
   <div class="button-container" style="margin-top: 5%;" >
-    <ion-button expand="full" color="primary">Crear Cuenta</ion-button>
+    <ion-button expand="full" color="primary" (click)="registrar(nombreInput, email, dni, fechaNac)">Crear Cuenta</ion-button>
   </div>
+
+  <ion-row>
+    <ion-col></ion-col>
+    <ion-col>
+      <ion-item *ngIf="errorOccured">
+        <ion-label color="danger">{{ errorMessage }}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col></ion-col>
+
+  </ion-row>
 </ion-content>

@@ -52,6 +52,8 @@ export class Tab1Page {
         }
       }, error => {
         console.log(error)
+        this.showError();
+
       });
     }
   }
