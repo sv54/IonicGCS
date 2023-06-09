@@ -21,12 +21,12 @@ export class StorageService {
   // Create and expose methods that users of this service can
   // call, for example:
   async set(key: string, value: any) {
-    await this.storage.create();
+    //await this.storage.create();
     await this._storage?.set(key, value);
   }
 
   async get(key: string) {
-    await this.storage.create();
+    //await this.storage.create();
     return this._storage?.get(key);
   }
 }
