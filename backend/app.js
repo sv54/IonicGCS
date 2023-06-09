@@ -8,15 +8,16 @@ const cors = require('cors')
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const connection = mysql.createConnection({
+  // //@Serhii
   // host: '192.168.1.122',
   // user: 'Desktop2',
   host: 'localhost',
-  //user: 'root',
+  user: 'root',
   //password: '',
 
   // @Angel
-  user: 'dss',
-  password: '12345678',
+  // user: 'dss',
+  // password: '12345678',
   database: 'gcs'
 });
 app.use(cors()); // Habilitar CORS para todas las rutas
@@ -35,8 +36,8 @@ connection.connect((error) => {
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 var corsOptions = {
-    origin: "http://localhost:8100"
-};  
+  origin: "http://localhost:8100"
+};
 app.use(cors(corsOptions));
 
 app.get('/medicos', (req, res) => {
@@ -53,7 +54,7 @@ app.get('/medicos', (req, res) => {
 app.post('/medicos/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const sql =  'SELECT * FROM medicos WHERE Email = "'+ String(email) +'" LIMIT 1'
+  const sql = 'SELECT * FROM medicos WHERE Email = "' + String(email) + '" LIMIT 1'
   console.log(sql)
   connection.query(sql, (error, results, fields) => {
     if (error) {
@@ -62,19 +63,19 @@ app.post('/medicos/login', (req, res) => {
     } else {
       console.log(results)
 
-      if (results.length === 0){
+      if (results.length === 0) {
         response = {
           status: "email " + email + " no encontrado",
         }
         res.json(response);
-      }else{
-        if(results[0].Password != password){
+      } else {
+        if (results[0].Password != password) {
           response = {
             status: "password incorrecto",
           }
           res.json(response);
 
-        }else{
+        } else {
           response = {
             status: "Ok",
             datos: results[0]
@@ -105,20 +106,71 @@ app.post('/medicos', (req, res) => {
     });
 });
 
+app.post('/regPaciente', (req, res) => {
+  console.log(req.body)
+  const nombre = req.body.Nombre;
+  const dni = req.body.DNI;
+  const email = req.body.Email;
+  const fechaNac = req.body.FechaNac;
+  const password = req.body.Password;
+  const fk_medico = req.body.fk_medico;
+  connection.query('SELECT dni FROM pacientes WHERE dni = ?', [dni], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error al verificar el DNI');
+    } else {
+      if (results.length > 0) {
+        // El DNI ya está registrado, enviar una respuesta de error
+        res.status(400).send('El DNI ya está registrado');
+      } else {
+        connection.query('SELECT email FROM pacientes WHERE email = ?', [email], (error, emailResults) => {
+          if (error) {
+            console.error(error);
+            res.status(500).send('Error al verificar el Email');
+          } else {
+            if (emailResults.length > 0) {
+              // El Email ya está registrado, enviar una respuesta de error
+              res.status(400).send('El Email ya está registrado');
+            } else {
+              // El DNI no está registrado, insertar el nuevo paciente
+              connection.query('INSERT INTO pacientes (nombre, dni, email, fechaNac, password, fk_medico) VALUES (?, ?, ?, ?, ?, ?)',
+                [nombre, dni, email, fechaNac, password, fk_medico],
+                (error, results) => {
+                  if (error) {
+                    console.error(error);
+                    res.status(500).send('Error al insertar nuevo paciente');
+                  } else {
+                    response = {
+                      status: "Ok",
+                    }
+                    console.log("ok")
+                    res.status(200).send(response);
+                  }
+                }
+              );
+            }
+          }
+        });
+      }
+    }
+  });
+});
+
+
 app.get('/mensajeria-listado', (req, res) => {
   const { medico } = req.query
 
   const query = 'SELECT p.Nombre, p.Id, p.DNI, m.Mensaje, m.FechaHora ' +
-                'FROM pacientes p ' + 
-                'INNER JOIN mensajes m ON m.fk_paciente = p.Id ' + 
-                'WHERE m.fk_medico = ' + medico + ' AND m.FechaHora = (SELECT MAX(FechaHora) FROM mensajes WHERE fk_paciente = p.Id) ' + 
-                'ORDER BY p.Id';
+    'FROM pacientes p ' +
+    'INNER JOIN mensajes m ON m.fk_paciente = p.Id ' +
+    'WHERE m.fk_medico = ' + medico + ' AND m.FechaHora = (SELECT MAX(FechaHora) FROM mensajes WHERE fk_paciente = p.Id) ' +
+    'ORDER BY p.Id';
 
-  connection.query(query,(error, results, fields) => {
+  connection.query(query, (error, results, fields) => {
     if (error) {
       console.error(error)
       res.status(500).send('Error en el listado del médico')
-    } 
+    }
     else {
       if (results.length == 0) {
         res.json("No tienes ningún chat abierto")
@@ -138,7 +190,7 @@ app.get('/mensajeria/:id', (req, res) => {
     if (error) {
       console.error(error)
       res.status(500).send('Error encontrando al médico')
-    } 
+    }
     else {
       const medico = results[0].fk_medico
       query = 'SELECT m.*, p.Nombre as Paciente, md.Nombre as Medico FROM mensajes m, pacientes p, medicos md WHERE m.fk_medico = ' + medico + ' AND m.fk_paciente = ' + paciente + ' AND m.fk_paciente = p.id AND m.fk_medico = md.id;'
@@ -147,7 +199,7 @@ app.get('/mensajeria/:id', (req, res) => {
         if (error) {
           console.error(error)
           res.status(500).send('Error en el chat con el paciente')
-        } 
+        }
         else {
           if (results.lengt == 0) {
             res.json("No tienes ningún chat abierto")
@@ -160,7 +212,7 @@ app.get('/mensajeria/:id', (req, res) => {
     }
   })
 
-  
+
 });
 
 app.post('/mensajeria/:id', (req, res) => {
@@ -173,19 +225,19 @@ app.post('/mensajeria/:id', (req, res) => {
     if (error) {
       console.error(error)
       res.status(500).send('Error encontrando al médico')
-    } 
+    }
     else {
       const medico = results[0].fk_medico
       connection.query('INSERT INTO mensajes (fk_medico, fk_paciente, Remitente, Mensaje, FechaHora) VALUES (?, ?, ?, ?, ?)',
         [medico, paciente, 1, mensaje, date], (error, results, fields) => {
-        if (error) {
-          console.error(error)
-          res.status(500).send('Error al enviar el mensaje')
-        } 
-        else {
-          res.json("Mensaje enviado!!")
-        }
-      })
+          if (error) {
+            console.error(error)
+            res.status(500).send('Error al enviar el mensaje')
+          }
+          else {
+            res.json("Mensaje enviado!!")
+          }
+        })
     }
   })
 });
@@ -221,7 +273,7 @@ app.get('/pacientes', (req, res) => {
 //       res.json(results);
 //     }
 //   });
-// }); 
+// });
 
 
 app.get('/medicamentos/:paciente', (req, res) => {
