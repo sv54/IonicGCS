@@ -21,8 +21,15 @@ const routes: Routes = [
   {
     path: 'agregar-paciente-page',
     loadChildren: () => import('./agregar-paciente-page/agregar-paciente-page.module').then( m => m.AgregarPacientePagePageModule)
+  },
+  {
+    path: 'mensajeria-listado',
+    loadChildren: () => import('./mensajeria-listado/mensajeria-listado.module').then( m => m.MensajeriaListadoPageModule)
+  },
+  {
+    path: 'mensajeria/:id',
+    loadChildren: () => import('./mensajeria/mensajeria.module').then( m => m.MensajeriaPageModule)
   }
-
 ];
 @NgModule({
   imports: [
