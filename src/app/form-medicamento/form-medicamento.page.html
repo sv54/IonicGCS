@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Medicamento/Actividad</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Medicamento/Actividad</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="modo === 'agregar'">
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label> <br>
+          <ion-input type="text" [(ngModel)]="nombre" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Fecha de Inicio</ion-label> <br>
+          <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fechaInicio" required></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Fecha de Fin</ion-label> <br>
+          <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fechaFin" required></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Veces al día</ion-label> <br>
+          <ion-input [(ngModel)]="vecesDia" required type="number" min="0"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Detalles</ion-label> <br>
+          <ion-textarea [(ngModel)]="detalles"></ion-textarea>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-button expand="full" color="primary" (click)="agregarMedicamento()">Guardar</ion-button>
+  </div>
+
+  <div *ngIf="modo === 'editar'">
+    <div *ngIf="medicamento != null">
+      <ion-card>
+        <ion-card-content>
+          <ion-item>
+            <ion-label position="floating">Nombre</ion-label> <br>
+            <ion-input type="text" [(ngModel)]="medicamento.Nombre" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Fecha de Inicio</ion-label> <br>
+            <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="medicamento.FechaInicio" required></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Fecha de Fin</ion-label> <br>
+            <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="medicamento.FechaFin" required></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Veces al día</ion-label> <br>
+            <ion-input [(ngModel)]="medicamento.VecesDia" required type="number" min="0"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Detalles</ion-label> <br>
+            <ion-textarea [(ngModel)]="medicamento.Detalles"></ion-textarea>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    
+      <ion-button expand="full" color="warning" (click)="agregarMedicamento()">EDITAR</ion-button>
+    </div>
+  </div>
+</ion-content>

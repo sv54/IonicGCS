@@ -11,12 +11,8 @@ const connection = mysql.createConnection({
   // host: '192.168.1.122',
   // user: 'Desktop2',
   host: 'localhost',
-  //user: 'root',
-  //password: '',
-
-  // @Angel
-  user: 'dss',
-  password: '12345678',
+  user: 'root',
+  password: 'root',
   database: 'gcs'
 });
 app.use(cors()); // Habilitar CORS para todas las rutas
@@ -101,6 +97,85 @@ app.post('/medicos', (req, res) => {
         res.status(500).send('Error al insertar el médico');
       } else {
         res.status(200).send('Médico insertado correctamente');
+      }
+    });
+});
+
+//Añadir
+app.post('/formMedicamento/:idPaciente/agregar', (req, res) => {
+  const nombre = req.body.Nombre;
+  const fechaInicio = req.body.FechaInicio;
+  const fechaFin = req.body.FechaFin;
+  const vecesDia = req.body.VecesDia;
+  const detalles = req.body.Detalles;
+  const idPaciente = req.params.idPaciente;
+
+  connection.query('INSERT INTO medicamentos (Nombre, FechaInicio, FechaFin, VecesDia, Detalles, fk_paciente) VALUES (?, ?, ?, ?, ?, ?)',
+    [nombre, fechaInicio, fechaFin, vecesDia, detalles, idPaciente],
+    (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al insertar el medicamento' });
+      } else {
+        res.status(200).json({ message: 'Medicamento insertado correctamente' });
+      }
+    });
+});
+
+// Obtener datos iniciales del medicamento
+app.get('/formMedicamento/:idMedicamento', (req, res) => {
+  const idMedicamento = req.params.idMedicamento;
+
+  connection.query('SELECT * FROM medicamentos WHERE Id = ?', [idMedicamento], (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener los datos del medicamento');
+    } else {
+      if (results.length > 0) {
+        const medicamento = results[0];
+        res.status(200).json(medicamento);
+      } else {
+        res.status(404).send('Medicamento no encontrado');
+      }
+    }
+  });
+});
+
+// Editar
+app.put('/formMedicamento/:idMedicamento/editar', (req, res) => {
+  const idMedicamento = req.params.idMedicamento;
+
+  const nombre = req.body.Nombre;
+  const fechaInicio = req.body.FechaInicio;
+  const fechaFin = req.body.FechaFin;
+  const vecesDia = req.body.VecesDia;
+  const detalles = req.body.Detalles;
+  const idPaciente = req.body.idPaciente;
+
+  connection.query('UPDATE medicamentos SET Nombre = ?, FechaInicio = ?, FechaFin = ?, VecesDia = ?, Detalles = ?, fk_paciente = ? WHERE Id = ?',
+    [nombre, fechaInicio, fechaFin, vecesDia, detalles, idPaciente, idMedicamento],
+    (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Error al editar el medicamento');
+      } else {
+        res.status(200).send('Medicamento editado correctamente');
+      }
+    });
+});
+
+// Eliminar
+app.delete('/formMedicamento/:idMedicamento/eliminar', (req, res) => {
+  const idMedicamento = req.params.idMedicamento;
+
+  connection.query('DELETE FROM medicamentos WHERE Id = ?',
+    [idMedicamento],
+    (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Error al eliminar el medicamento');
+      } else {
+        res.status(200).send('Medicamento eliminado correctamente');
       }
     });
 });
