@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'mensajeria/:id',
     loadChildren: () => import('./mensajeria/mensajeria.module').then( m => m.MensajeriaPageModule)
+  },
+  {
+    path: 'listado-pacientes',
+    loadChildren: () => import('./tab2/tab2.module').then( m => m.Tab2PageModule)
   }
 ];
 @NgModule({

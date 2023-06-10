@@ -13,11 +13,14 @@ const connection = mysql.createConnection({
   // user: 'Desktop2',
   host: 'localhost',
   // @Angel
-  user: 'dss',
-  password: '12345678',
+  //user: 'dss',
+  //password: '12345678',
   // @David
   //user: 'root',
   //password: 'root',
+  // @Nikita
+  user: 'root',
+  password: '',
   database: 'gcs'
 });
 app.use(cors()); // Habilitar CORS para todas las rutas
@@ -372,8 +375,6 @@ app.get('/medicamentos/:paciente', (req, res) => {
     } else {
       if (results.length > 0) {
         res.json(results);
-      } else {
-        res.status(404).send('Medicamento no encontrado.');
       }
     }
   });

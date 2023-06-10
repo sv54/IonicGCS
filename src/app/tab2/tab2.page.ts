@@ -16,12 +16,14 @@ export class Tab2Page implements OnInit{
 
   ngOnInit() {
     this.fetchPatients();
+    this.storage.remove('paciente');
+    
   }
 
   redirectPaciente(patient: any){
     console.log("paciente: "+patient.DNI)
     this.storage.set("paciente", patient).then(() => {
-      this.router.navigate(["/paciente/" + patient.DNI]);
+      this.router.navigate(["paciente/" + patient.DNI]);
     });
   }
 

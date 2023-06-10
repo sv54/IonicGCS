@@ -12,20 +12,25 @@ export class PacienteHistorialPage implements OnInit {
 
   constructor(private storage: StorageService, private http: HttpClient, private toastController: ToastController, private navCtrl: NavController) { }
 
-  patient: any;
+  patient: any=undefined;
   medicamentos: any[]=[];
   Editar=false;
-
+  meds=false;
+  pac = false;
   ngOnInit() {
-    this.patient = undefined;
-
-    this.storage.get("paciente")?.then(async (value) =>{
+ 
+    this.storage.get("paciente")?.then((value) => {
       this.patient = value;
-      console.log("paciente recibido: "+this.patient.DNI);
-      await this.fetchMedicamentos();
-      console.log("msg: "+this.medicamentos[0].Nombre);
+  
+      if (this.patient !== null) {
+        this.fetchMedicamentos();
+        this.meds = true;
+      }
     });
+    this.pac = true;
+
   }
+  
 
   toggleEditar() {
     this.Editar = !this.Editar;

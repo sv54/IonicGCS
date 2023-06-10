@@ -29,4 +29,9 @@ export class StorageService {
     await this.storage.create();
     return this._storage?.get(key);
   }
+
+  async remove(key: string) {
+    await this.storage.create();
+    await this._storage?.remove(key);
+  }
 }
