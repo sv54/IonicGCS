@@ -22,7 +22,7 @@ export class PacienteHistorialPage implements OnInit {
     this.storage.get("paciente")?.then((value) => {
       this.patient = value;
   
-      if (this.patient !== null) {
+      if (this.patient !== null && this.patient !== undefined) {
         this.fetchMedicamentos();
         this.meds = true;
       }
@@ -66,7 +66,7 @@ export class PacienteHistorialPage implements OnInit {
   }
 
   redirigirAPagina() {
-    this.navCtrl.navigateForward('/listado-pacientes');
+    this.navCtrl.navigateForward('/paciente/'+this.patient);
   }
 
   eliminarMedicamento(medicamentoID: number){
@@ -86,6 +86,8 @@ export class PacienteHistorialPage implements OnInit {
 
   async fetchMedicamentos() {
     console.log("fetching");
+    if (this.patient !== null && this.patient !== undefined) {
+
     this.http.get<any[]>('http://localhost:3000/medicamentos/'+this.patient.Id)
       .subscribe(
         data => {
@@ -96,6 +98,7 @@ export class PacienteHistorialPage implements OnInit {
           console.error('Failed to fetch medicamentos:', error);
         }
       );
+    }
   } 
   fetchPatientById() {
     if (this.patient !== null && this.patient !== undefined) {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController, NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-form-medicamento',
@@ -15,12 +16,13 @@ export class FormMedicamentoPage implements OnInit {
   vecesDia!: number;
   detalles!: string;
 
+  patient:any;
   pacienteId!: number;
   medicamentoId!: number;
   modo!: string;
   medicamento!: any;
 
-  constructor(private route: ActivatedRoute, private navCtrl: NavController, private http: HttpClient, private toastController: ToastController) {}
+  constructor(private storage: StorageService, private route: ActivatedRoute, private navCtrl: NavController, private http: HttpClient, private toastController: ToastController) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -41,6 +43,10 @@ export class FormMedicamentoPage implements OnInit {
         this.getMedicamento(idMedicamentoEdit.toString());
       }
     }
+
+    this.storage.get("paciente")?.then((value) => {
+      this.patient = value;
+    });
   }
 
   async mostrarMensajeError(mensaje: string) {
@@ -64,7 +70,7 @@ export class FormMedicamentoPage implements OnInit {
   }
 
   redirigirAPagina() {
-    this.navCtrl.navigateForward('/listado-pacientes');
+    this.navCtrl.navigateForward('/paciente/'+this.patient.DNI);
   }
 
   //Petición al back para pillar los datos previos
@@ -95,21 +101,21 @@ export class FormMedicamentoPage implements OnInit {
       this.nombre = this.medicamento.Nombre;
       this.fechaInicio = this.medicamento.FechaInicio;
       this.fechaFin = this.medicamento.FechaFin;
-      this.vecesDia = this.medicamento.VecesDia;
+      this.vecesDia = parseInt(this.medicamento.VecesDia,10);
       this.detalles = this.medicamento.Detalles;
     }
 
     //VALIDACIONES
     if (this.vecesDia <= 0 || !Number.isInteger(this.vecesDia)) {
-      this.mostrarMensajeError('El número de días debe ser un valor entero positivo');
+      this.mostrarMensajeError('El número de veces por día debe ser un valor entero positivo: '+this.vecesDia);
       return;
     }
 
     const fehcaInicioDate = new Date(this.fechaInicio);
     const fechaFinDate = new Date(this.fechaFin);
 
-    if (fehcaInicioDate >= fechaFinDate) {
-      this.mostrarMensajeError('La fecha de inicio debe ser anterior a la fecha de fin');
+    if (fehcaInicioDate > fechaFinDate) {
+      this.mostrarMensajeError('La fecha de inicio debe ser igual o anterior a la fecha de fin');
       return;
     }
 
