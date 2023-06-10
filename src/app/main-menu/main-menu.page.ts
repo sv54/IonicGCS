@@ -43,6 +43,6 @@ export class MainMenuPage implements OnInit {
   }
 
   async notificaciones(){
-    this.router.navigateByUrl('/')
+    this.router.navigateByUrl('/notificaciones')
   }
 }

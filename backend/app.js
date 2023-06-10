@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
   // //@Serhii
   // host: '192.168.1.122',
   // user: 'Desktop2',
-  host: 'localhost',
+  // host: 'localhost',
   // @Angel
   //user: 'dss',
   //password: '12345678',
@@ -399,7 +399,7 @@ app.put('/pacientes/:id', (req, res) => {
 app.get('/pacientes/:id', (req, res) => {
   const pacienteId = req.params.id;
   console.log(`/pacientes/${pacienteId} (GET)`);
-  
+
   // Query the database to fetch the patient with the specified ID
   const query = `SELECT * FROM pacientes WHERE id = ${pacienteId}`;
   connection.query(query, (error, results, fields) => {
@@ -413,6 +413,21 @@ app.get('/pacientes/:id', (req, res) => {
       } else {
         res.status(404).send('Paciente no encontrado');
       }
+    }
+  });
+});
+
+app.get('/notificaciones', (req, res) => {
+  const idMedico = req.body.id;
+
+  const query = `SELECT * FROM notificaciones WHERE id_medico = ${idMedico}`;
+  connection.query(query, (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener notificaciones');
+    } else {
+      const notificaciones = results;
+      res.json(results);
     }
   });
 });
