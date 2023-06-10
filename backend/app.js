@@ -9,8 +9,8 @@ app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const connection = mysql.createConnection({
   // //@Serhii
-  host: '192.168.1.122',
-  user: 'Desktop2',
+  // host: '192.168.1.122',
+  // user: 'Desktop2',
   // host: 'localhost',
   // @Angel
   //user: 'dss',
@@ -19,8 +19,8 @@ const connection = mysql.createConnection({
   //user: 'root',
   //password: 'root',
   // @Nikita
-  // user: 'root',
-  // password: '',
+  user: 'root',
+  password: '',
   database: 'gcs'
 });
 app.use(cors()); // Habilitar CORS para todas las rutas
@@ -426,10 +426,8 @@ app.get('/notificaciones', (req, res) => {
       console.error(error);
       res.status(500).send('Error al obtener notificaciones');
     } else {
-
       const notificaciones = results;
       res.json(results);
-
     }
   });
 });
