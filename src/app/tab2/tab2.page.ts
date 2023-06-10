@@ -20,8 +20,9 @@ export class Tab2Page implements OnInit{
 
   redirectPaciente(patient: any){
     console.log("paciente: "+patient.DNI)
-    this.storage.set("paciente", patient);
-    this.router.navigate(["/paciente/"+patient.DNI]);
+    this.storage.set("paciente", patient).then(() => {
+      this.router.navigate(["/paciente/" + patient.DNI]);
+    });
   }
 
   fetchPatients() {

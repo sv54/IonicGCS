@@ -12,8 +12,12 @@ const connection = mysql.createConnection({
   // host: '192.168.1.122',
   // user: 'Desktop2',
   host: 'localhost',
-  user: 'root',
-  password: 'root',
+  // @Angel
+  user: 'dss',
+  password: '12345678',
+  // @David
+  //user: 'root',
+  //password: 'root',
   database: 'gcs'
 });
 app.use(cors()); // Habilitar CORS para todas las rutas
@@ -275,8 +279,18 @@ app.get('/mensajeria/:id', (req, res) => {
           res.status(500).send('Error en el chat con el paciente')
         }
         else {
-          if (results.lengt == 0) {
-            res.json("No tienes ningún chat abierto")
+          if (results.length == 0) {
+            query = 'SELECT p.Nombre as Paciente, m.Nombre as Medico FROM pacientes p, medicos m WHERE m.id = ' + medico + ' AND p.fk_medico = ' + medico + ' AND p.id = ' + paciente + ';';
+
+            connection.query(query, (error, results, fields) => {
+              if (error) {
+                console.error(error)
+                res.status(500).send('Error en el chat con el paciente')
+              }
+              else {
+                res.json(results)
+              }
+            })
           }
           else {
             res.json(results)
@@ -285,8 +299,6 @@ app.get('/mensajeria/:id', (req, res) => {
       })
     }
   })
-
-
 });
 
 app.post('/mensajeria/:id', (req, res) => {

@@ -1,6 +1,6 @@
-.page-title {
+/*.page-title {
     text-align: center;
-    font-size: 64px;
+    font-size: 32px;
 
     margin-top: 50px;
     margin-bottom: 50px;
@@ -25,16 +25,15 @@
 }
 
 .custom-button {
-    width: 120px; /* Ancho personalizado */
-    margin-left: auto; /* Alinea el botón a la derecha */
+    width: 150px;
     margin-bottom: 50px;
-    margin-right: 100px;
+    margin-right: 500em;s
 }
 
 .custom-input {  
-    width: 90%;
+    width: 70%;
     height: 150px;
-    margin-left: 100px;
+    margin-left: 10px;
     margin-bottom: 50px;
     resize: none;
 }
@@ -42,4 +41,74 @@
 .custom-input-col {
     display: flex;
     align-items: center;
+}*/
+
+/* iPhone 12 */
+@media (max-width: 428px) {
+    /* Estilos para el encabezado */
+    ion-header {
+        padding-top: 10px;
+        padding-bottom: 15px;
+    }
+    
+    .page-title {
+        font-size: 20px;
+        text-align: center;
+    }
+    
+    /* Estilos para el contenido */
+    ion-content {
+        padding: 10px;
+    }
+    
+    /* Estilos para el footer */
+    ion-footer {
+        padding: 10px;
+        height: 150px;
+    }
+    
+    .custom-input-col {
+        width: 80%;
+    }
+    
+    .custom-button-col {
+        width: 20%;
+    }
+    
+    .custom-input {
+        height: 100px;
+        width: 250px;
+        font-size: 14px;
+        margin-top: 10px
+    }
+    
+    .custom-button {
+        text-align: center;
+        height: 50px;
+        width: 80px;
+        font-size: 14px;
+        margin-left: 15px;
+        margin-top: 35px;
+    }
+}
+  
+/* Estilos para los mensajes */
+.ion-list ion-item {
+    margin-bottom: 20px;
+}
+
+.medico {
+    text-align: right;
+    color: #67A501;
+    padding: 10px;
+    margin-left: auto;
+    width: 100%;
+    max-width: 70%;
+    text-align: right;
+}
+
+.paciente {
+    text-align: left;
+    color: #0085A0;
+    padding: 10px;
 }
