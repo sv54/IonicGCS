@@ -15,7 +15,7 @@ import { StorageService } from './storage.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, StorageService],
   bootstrap: [AppComponent],
 })
 
