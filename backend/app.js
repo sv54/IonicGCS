@@ -379,3 +379,40 @@ app.get('/medicamentos/:paciente', (req, res) => {
     }
   });
 });
+
+app.put('/pacientes/:id', (req, res) => {
+  const pacienteId = req.params.id;
+  const observaciones = req.body.observaciones;
+
+  console.log(`/pacientes/${pacienteId}/observaciones (PUT) - Observaciones: ${observaciones}`);
+
+  connection.query('UPDATE pacientes SET observaciones = ? WHERE id = ?', [observaciones, pacienteId], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error al actualizar las observaciones del paciente');
+    } else {
+      res.sendStatus(200);
+    }
+  });
+});
+
+app.get('/pacientes/:id', (req, res) => {
+  const pacienteId = req.params.id;
+  console.log(`/pacientes/${pacienteId} (GET)`);
+  
+  // Query the database to fetch the patient with the specified ID
+  const query = `SELECT * FROM pacientes WHERE id = ${pacienteId}`;
+  connection.query(query, (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener el paciente');
+    } else {
+      if (results.length > 0) {
+        const paciente = results[0];
+        res.json(paciente);
+      } else {
+        res.status(404).send('Paciente no encontrado');
+      }
+    }
+  });
+});

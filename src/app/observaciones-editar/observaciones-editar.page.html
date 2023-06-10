@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="'/paciente/' + this.patient?.Id" routerDirection="back">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Editar Observaciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-textarea rows="5" placeholder="Observaciones..." [(ngModel)]="obsText"></ion-textarea>
+    <ion-button expand="full" (click)="updateObservaciones()">Submit</ion-button>  
+</ion-content>

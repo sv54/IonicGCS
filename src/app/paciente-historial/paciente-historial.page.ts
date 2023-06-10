@@ -12,7 +12,7 @@ export class PacienteHistorialPage implements OnInit {
 
   constructor(private storage: StorageService, private http: HttpClient, private toastController: ToastController, private navCtrl: NavController) { }
 
-  patient: any=undefined;
+  patient: any;
   medicamentos: any[]=[];
   Editar=false;
   meds=false;
@@ -26,11 +26,16 @@ export class PacienteHistorialPage implements OnInit {
         this.fetchMedicamentos();
         this.meds = true;
       }
+
     });
     this.pac = true;
-
   }
-  
+  ionViewWillEnter() {
+    if (this.patient !== null) {
+      this.fetchPatientById();
+      this.fetchMedicamentos();
+    }
+  }
 
   toggleEditar() {
     this.Editar = !this.Editar;
@@ -61,7 +66,7 @@ export class PacienteHistorialPage implements OnInit {
   }
 
   redirigirAPagina() {
-    this.navCtrl.navigateForward('/tabs/tab2');
+    this.navCtrl.navigateForward('/listado-pacientes');
   }
 
   eliminarMedicamento(medicamentoID: number){
@@ -92,4 +97,23 @@ export class PacienteHistorialPage implements OnInit {
         }
       );
   } 
+  fetchPatientById() {
+    if (this.patient !== null && this.patient !== undefined) {
+
+      const patientId = this.patient.Id
+      console.log(`Fetching patient with ID: ${patientId}`);
+      this.http.get<any>(`http://localhost:3000/pacientes/${patientId}`)
+        .subscribe(
+          (data) => {
+            this.patient = data;
+            console.log('Fetched Patient:', this.patient);
+          },
+          (error) => {
+            console.error('Failed to fetch patient:', error);
+          }
+        );
+    }
+  }
+  
+  
 }

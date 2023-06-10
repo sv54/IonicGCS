@@ -57,7 +57,7 @@
       </tr>
       <tr>
         <th style="border: 1px solid black; padding: 8px; text-align: center;">Observaciones
-          <ion-button *ngIf="Editar" shape="round" size="small" color="warning" style="font-size: 8px; padding:1px;margin: 1px;">
+          <ion-button [routerLink]="['/observaciones-editar', patient.Id]" *ngIf="Editar" shape="round" size="small" color="warning" style="font-size: 8px; padding:1px;margin: 1px;">
             <ion-icon name="pencil"></ion-icon>
           </ion-button>
         </th>

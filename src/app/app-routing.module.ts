@@ -47,7 +47,12 @@ const routes: Routes = [
   {
     path: 'listado-pacientes',
     loadChildren: () => import('./tab2/tab2.module').then( m => m.Tab2PageModule)
+  },
+  {
+    path: 'observaciones-editar/:DNI',
+    loadChildren: () => import('./observaciones-editar/observaciones-editar.module').then( m => m.ObservacionesEditarPageModule)
   }
+
 ];
 @NgModule({
   imports: [
