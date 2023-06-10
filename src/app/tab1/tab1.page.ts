@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from '../storage.service';
 import { Router } from '@angular/router';
+import { log } from 'console';
 
 
 @Component({
@@ -16,6 +17,117 @@ export class Tab1Page {
   constructor(private http: HttpClient, private storage: StorageService, private router: Router) {
   }
 
+  async ionViewWillEnter(){
+    var email = "";
+    var password = "";
+    this.storage.get('password').then((value) => {
+      if (value) {
+        console.log(value)
+        password = value
+      } else {
+        console.log('No hay usuario logeado');
+      }
+    }).catch((error) => {
+      // Error al obtener el valor del storage
+      console.error('Error al obtener datos del storage:', error);
+    });
+    this.storage.get('email').then((value) => {
+      if (value) {
+        console.log("email: ", value)
+        email = value
+      } else {
+        console.log('No hay usuario logeado');
+      }
+    }).catch((error) => {
+      // Error al obtener el valor del storage
+      console.error('Error al obtener datos del storage:', error);
+    });
+
+
+    setTimeout(() => {
+      console.log(email, password)
+      if(email && password){
+        console.log("entrando")
+        this.loginConString(email, password);
+      }
+    }, 1000)
+
+  }
+
+
+
+  // ngOnInit(){
+  //   let email = ""
+  //   let password = ""
+  //   setTimeout(() => {
+  //     this.storage.get('dni')?.then((value) => {
+  //       console.log(value);
+  //     });
+  //   }, 1000);
+  //   this.storage.get('email').then((value) => {
+  //     if (value) {
+  //       email = value
+  //     } else {
+  //       console.log('No hay usuario logeado');
+  //     }
+  //   }).catch((error) => {
+  //     // Error al obtener el valor del storage
+  //     console.error('Error al obtener datos del storage:', error);
+  //   });
+
+  //   this.storage.get('password').then((value) => {
+  //     if (value) {
+  //       password = value
+  //     } else {
+  //       console.log('No hay usuario logeado');
+  //     }
+  //   }).catch((error) => {
+  //     // Error al obtener el valor del storage
+  //     console.error('Error al obtener datos del storage:', error);
+  //   });
+  //   console.log()
+  //   if(email && password){
+  //     this.loginConString(email, password);
+  //   }
+  // }
+
+
+
+  async loginConString(emailInput: string, passwordInput: string ){
+    console.log(emailInput, passwordInput);
+    const requestBody = {
+      email: emailInput,
+      password: passwordInput
+    };
+
+    this.http.post('http://localhost:3000/medicos/login', requestBody)
+    .subscribe(data => {
+      const response:any = data;
+      if (response.status == 'Ok'){
+        console.log(response.datos)
+        this.storage.set('id', response.datos.Id);
+        this.storage.set('email', emailInput);
+        this.storage.set('password', passwordInput);
+        this.storage.set('nombre', response.datos.Nombre);
+        this.storage.set('dni', response.datos.DNI);
+        this.storage.set('fechaNac', response.datos.FechaNac);
+        this.storage.get('dni')?.then((value) => {
+          console.log(value);
+        })
+        this.errorOccured = false;
+        this.router.navigateByUrl('/main-menu')
+
+      }
+      else {
+        console.log('no encontrado');
+        this.showError();
+      }
+    }, error => {
+      console.log(error)
+      this.showError();
+    });
+
+  }
 
   async login(emailInput: any, passwordInput: any ){
     console.log(emailInput.value, passwordInput.value);
@@ -32,16 +144,12 @@ export class Tab1Page {
       .subscribe(data => {
         const response:any = data;
         if (response.status == 'Ok'){
-          console.log(response.datos)
           this.storage.set('id', response.datos.Id);
           this.storage.set('email', emailInput.value);
           this.storage.set('password', passwordInput.value);
           this.storage.set('nombre', response.datos.Nombre);
           this.storage.set('dni', response.datos.DNI);
           this.storage.set('fechaNac', response.datos.FechaNac);
-          // this.storage.get('dni')?.then((value) => {
-          //   console.log(value);
-          // })
           this.errorOccured = false;
           this.router.navigateByUrl('/main-menu')
 

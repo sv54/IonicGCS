@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { StorageService } from '../storage.service';
+
 
 
 @Component({
@@ -9,11 +11,20 @@ import { Router } from '@angular/router';
 })
 export class MainMenuPage implements OnInit {
 
-  constructor( private router: Router) { }
+  constructor( private router: Router, private storage: StorageService) { }
 
   ngOnInit() {
   }
 
+  async salir(){
+    this.storage.set('id', "");
+    this.storage.set('email', "");
+    this.storage.set('password', "");
+    this.storage.set('nombre', "");
+    this.storage.set('dni', "");
+    this.storage.set('fechaNac', "");
+    this.router.navigateByUrl('/tabs/tab1')
+  }
 
   async config(){
     this.router.navigateByUrl('/configuration-page')
