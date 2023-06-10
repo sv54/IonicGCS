@@ -1,5 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="'/mensajeria-listado'" routerDirection="back">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+      </ion-buttons>
     <ion-title class="page-title">{{ pacienteName }}</ion-title>
   </ion-toolbar>
 </ion-header>

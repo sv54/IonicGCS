@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-mensajeria',
@@ -12,14 +13,15 @@ export class MensajeriaPage implements OnInit {
   pacienteId!: number;
   pacienteName!: string;
   mensajes: any[] = [];
-
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  patient:any;
+  constructor(private storage: StorageService,private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.pacienteId = params['id'];
       this.loadMensajes();
     });
+    this.fetchPatientById();
   }
 
   loadMensajes() {
@@ -59,5 +61,21 @@ export class MensajeriaPage implements OnInit {
       }
     );
   }
+  fetchPatientById() {
+    if (this.pacienteId !== null && this.pacienteId !== undefined) {
 
+      const patientId = this.pacienteId;
+      console.log(`Fetching patient with ID: ${patientId}`);
+      this.http.get<any>(`http://localhost:3000/pacientes/${patientId}`)
+        .subscribe(
+          (data) => {
+            this.patient = data;
+            console.log('Fetched Patient:', this.patient);
+          },
+          (error) => {
+            console.error('Failed to fetch patient:', error);
+          }
+        );
+    }
+  }
 }

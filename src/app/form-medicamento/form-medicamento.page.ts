@@ -43,10 +43,8 @@ export class FormMedicamentoPage implements OnInit {
         this.getMedicamento(idMedicamentoEdit.toString());
       }
     }
+    this.fetchPatientById();
 
-    this.storage.get("paciente")?.then((value) => {
-      this.patient = value;
-    });
   }
 
   async mostrarMensajeError(mensaje: string) {
@@ -191,6 +189,25 @@ export class FormMedicamentoPage implements OnInit {
           this.mostrarMensajeError('Error al editar el medicamento');
         }
       );
+    }
+  }
+
+  
+  fetchPatientById() {
+    if (this.pacienteId !== null && this.pacienteId !== undefined) {
+
+      const patientId = this.pacienteId;
+      console.log(`Fetching patient with ID: ${patientId}`);
+      this.http.get<any>(`http://localhost:3000/pacientes/${patientId}`)
+        .subscribe(
+          (data) => {
+            this.patient = data;
+            console.log('Fetched Patient:', this.patient);
+          },
+          (error) => {
+            console.error('Failed to fetch patient:', error);
+          }
+        );
     }
   }
 }
