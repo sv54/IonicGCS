@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/main-menu" routerDirection="back">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Pacientes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <a class="nav-link" *ngFor="let notificacion of notificaciones" (click)="redirectChat(notificacion)">
+    <ion-item style="padding-bottom:5px">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="2">
+            <ion-thumbnail>
+              <img src="assets/icon/profile.png">
+            </ion-thumbnail>
+          </ion-col>
+          <ion-col size="10">
+            <ion-label>
+              <h2>{{notificacion.Nombre}}</h2>
+              <p>{{notificacion.texto}}</p>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </a>
+</ion-content>

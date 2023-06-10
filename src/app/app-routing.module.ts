@@ -51,7 +51,11 @@ const routes: Routes = [
   {
     path: 'observaciones-editar/:DNI',
     loadChildren: () => import('./observaciones-editar/observaciones-editar.module').then( m => m.ObservacionesEditarPageModule)
+  },  {
+    path: 'notificaciones',
+    loadChildren: () => import('./notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)
   }
+
 
 ];
 @NgModule({
