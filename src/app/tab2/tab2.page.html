@@ -1,16 +1,20 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/main-menu" routerDirection="back">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       Pacientes
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
-  <ion-searchbar placeholder="Buscar paciente..."></ion-searchbar>
+  <ion-searchbar placeholder="Buscar paciente..." [(ngModel)]="searchTerm" (ionChange)="filterPatients()"></ion-searchbar>
 
-  <a class="nav-link" [routerLink]="['/paciente/:DNI']" *ngFor="let patient of patients" (click)="redirectPaciente(patient)">
+  <a class="nav-link" *ngFor="let patient of filteredPatients" (click)="redirectPaciente(patient)">
     <ion-item style="padding-bottom:5px">
       <ion-grid>
         <ion-row>

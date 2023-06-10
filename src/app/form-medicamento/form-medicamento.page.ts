@@ -64,7 +64,7 @@ export class FormMedicamentoPage implements OnInit {
   }
 
   redirigirAPagina() {
-    this.navCtrl.navigateForward('/tabs/tab2');
+    this.navCtrl.navigateForward('/listado-pacientes');
   }
 
   //Petición al back para pillar los datos previos

@@ -20,7 +20,7 @@ export class MainMenuPage implements OnInit {
   }
 
   async pacientes(){
-    this.router.navigateByUrl('/tabs/tab2')
+    this.router.navigateByUrl('/listado-pacientes')
   }
 
   async agregarPaciente(){

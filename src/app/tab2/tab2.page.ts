@@ -26,13 +26,25 @@ export class Tab2Page implements OnInit{
       this.router.navigate(["paciente/" + patient.DNI]);
     });
   }
-
+  filteredPatients: any[] = [];
+  searchTerm: string = '';
+  
+  // Call this method whenever the search term changes
+  filterPatients() {
+    this.filteredPatients = this.patients.filter((patient) =>
+      patient.Nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      patient.DNI.includes(this.searchTerm)
+    );
+  }
+  
   fetchPatients() {
     console.log("fetching");
     this.http.get<any[]>('http://localhost:3000/pacientes')
       .subscribe(
         data => {
           this.patients = data;
+          this.filteredPatients = this.patients;
+
           console.log('Patients:', this.patients);
         },
         error => {

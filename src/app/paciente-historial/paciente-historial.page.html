@@ -1,13 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/listado-pacientes" routerDirection="back">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Historial del paciente</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-buttons slot="start">
-  <ion-button routerLink="/listado-pacientes" routerDirection="back">
-    <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-  </ion-button>
-</ion-buttons>
+
 <ion-content  [fullscreen]="true">
 <ng-container *ngIf="pac">
 
@@ -55,13 +56,15 @@
         </td>
       </tr>
       <tr>
-        <th style="border: 1px solid black; padding: 8px; text-align: center;">Observaciones</th>
-      </tr>
-      <tr>
-        <td *ngIf="pac"  style="border: 1px solid black; padding: 8px; text-align: left;">{{patient?.observaciones}}
+        <th style="border: 1px solid black; padding: 8px; text-align: center;">Observaciones
           <ion-button *ngIf="Editar" shape="round" size="small" color="warning" style="font-size: 8px; padding:1px;margin: 1px;">
             <ion-icon name="pencil"></ion-icon>
           </ion-button>
+        </th>
+
+      </tr>
+      <tr>
+        <td *ngIf="pac"  style="border: 1px solid black; padding: 8px; text-align: left;">{{patient?.observaciones}}
           
         </td>
       </tr>
