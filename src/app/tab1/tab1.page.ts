@@ -54,45 +54,6 @@ export class Tab1Page {
 
   }
 
-
-
-  // ngOnInit(){
-  //   let email = ""
-  //   let password = ""
-  //   setTimeout(() => {
-  //     this.storage.get('dni')?.then((value) => {
-  //       console.log(value);
-  //     });
-  //   }, 1000);
-  //   this.storage.get('email').then((value) => {
-  //     if (value) {
-  //       email = value
-  //     } else {
-  //       console.log('No hay usuario logeado');
-  //     }
-  //   }).catch((error) => {
-  //     // Error al obtener el valor del storage
-  //     console.error('Error al obtener datos del storage:', error);
-  //   });
-
-  //   this.storage.get('password').then((value) => {
-  //     if (value) {
-  //       password = value
-  //     } else {
-  //       console.log('No hay usuario logeado');
-  //     }
-  //   }).catch((error) => {
-  //     // Error al obtener el valor del storage
-  //     console.error('Error al obtener datos del storage:', error);
-  //   });
-  //   console.log()
-  //   if(email && password){
-  //     this.loginConString(email, password);
-  //   }
-  // }
-
-
-
   async loginConString(emailInput: string, passwordInput: string ){
     console.log(emailInput, passwordInput);
     const requestBody = {
