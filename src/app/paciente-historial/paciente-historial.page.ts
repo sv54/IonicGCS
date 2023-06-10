@@ -17,6 +17,8 @@ export class PacienteHistorialPage implements OnInit {
   Editar=false;
 
   ngOnInit() {
+    this.patient = undefined;
+
     this.storage.get("paciente")?.then(async (value) =>{
       this.patient = value;
       console.log("paciente recibido: "+this.patient.DNI);
@@ -27,6 +29,10 @@ export class PacienteHistorialPage implements OnInit {
 
   toggleEditar() {
     this.Editar = !this.Editar;
+  }
+
+  toggleEnviarMensaje() {
+    this.navCtrl.navigateForward('/mensajeria/' + this.patient.Id)
   }
 
   async mostrarMensajeError(mensaje: string) {

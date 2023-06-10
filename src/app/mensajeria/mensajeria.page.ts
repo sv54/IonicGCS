@@ -26,8 +26,13 @@ export class MensajeriaPage implements OnInit {
     // Realizamos la solicitud a tu API para obtener los mensajes
     this.http.get<any[]>(`http://localhost:3000/mensajeria/${this.pacienteId}`).subscribe(
       response => {
-        this.mensajes = response.map(respuesta => respuesta);
-        this.pacienteName = response[0].Paciente;
+        if (response[0].hasOwnProperty('Mensaje')){
+          this.mensajes = response.map(respuesta => respuesta);
+          this.pacienteName = response[0].Paciente;
+        } 
+        else {
+          this.pacienteName = response[0].Paciente;
+        }
       },
       error => {
         console.log('Error al obtener los mensajes:', error);
