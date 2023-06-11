@@ -23,27 +23,32 @@ export class NotificacionesPage implements OnInit {
   async getNotificaciones() {
     console.log("fetching");
     this.medicoId = await this.storage.get('id')?.then((value) => {
-
-    this.http.get<any[]>('http://localhost:3000/notificaciones/'+value)
-      .subscribe(
-        data => {
-          this.notificaciones = data;
-          console.log('Notificaciones:', this.notificaciones);
-        },
-        error => {
-          console.error('Failed to fetch notificaciones:', error);
-        }
-      );
+      this.medicoId = value
+      this.http.get<any[]>('http://localhost:3000/notificaciones/' + value)
+        .subscribe(
+          data => {
+            this.notificaciones = data;
+            console.log('Notificaciones:', this.notificaciones);
+          },
+          error => {
+            console.error('Failed to fetch notificaciones:', error);
+          }
+        );
     });
   }
 
 
-  redirectChat(notificacion: any){
+  redirectChat(notificacion: any) {
     const requestBody = {
-
     };
 
-    this.navCtrl.navigateForward('/mensajeria/'+notificacion.id_paciente);
+    this.http.delete<any[]>('http://localhost:3000/notificaciones/' + notificacion.id)
+      .subscribe(
+        data => {
+
+        }
+      );
+    this.navCtrl.navigateForward('/mensajeria/' + notificacion.id_paciente);
   }
 
 
