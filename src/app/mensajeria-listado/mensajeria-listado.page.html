@@ -9,7 +9,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-  
+
   <ion-searchbar [(ngModel)]="searchFilter" (ionChange)="filtrarPorNombre()"></ion-searchbar>
 
   <ion-list>
@@ -17,7 +17,7 @@
       <div class="paciente-item">
         <span>{{ paciente.Nombre }}</span><br/>
         <span>{{ paciente.DNI }}</span><br/><br/>
-        <span class="mensaje">{{ paciente.Mensaje }}</span>
+        <span class="mensaje">{{ paciente.Mensaje | slice:0:100 }}</span>
       </div>
     </ion-item>
   </ion-list>

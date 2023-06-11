@@ -30,7 +30,7 @@
     margin-right: 500em;s
 }
 
-.custom-input {  
+.custom-input {
     width: 70%;
     height: 150px;
     margin-left: 10px;
@@ -50,38 +50,38 @@
         padding-top: 10px;
         padding-bottom: 15px;
     }
-    
+
     .page-title {
         font-size: 20px;
         text-align: center;
     }
-    
+
     /* Estilos para el contenido */
     ion-content {
         padding: 10px;
     }
-    
+
     /* Estilos para el footer */
     ion-footer {
         padding: 10px;
         height: 150px;
     }
-    
+
     .custom-input-col {
         width: 80%;
     }
-    
+
     .custom-button-col {
         width: 20%;
     }
-    
+
     .custom-input {
         height: 100px;
         width: 250px;
         font-size: 14px;
         margin-top: 10px
     }
-    
+
     .custom-button {
         text-align: center;
         height: 50px;
@@ -91,20 +91,19 @@
         margin-top: 35px;
     }
 }
-  
+
 /* Estilos para los mensajes */
 .ion-list ion-item {
     margin-bottom: 20px;
 }
 
 .medico {
-    text-align: right;
-    color: #67A501;
+    text-align: left;
+    color: black;
     padding: 10px;
     margin-left: auto;
     width: 100%;
     max-width: 70%;
-    text-align: right;
 }
 
 .paciente {
