@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from '../storage.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-notificaciones',
@@ -13,7 +14,7 @@ export class NotificacionesPage implements OnInit {
   notificaciones: any = []
   medicoId: any;
 
-  constructor(private router: Router, private storage: StorageService, private http: HttpClient) { }
+  constructor(private navCtrl: NavController, private router: Router, private storage: StorageService, private http: HttpClient) { }
 
   ngOnInit() {
     this.getNotificaciones()
@@ -38,10 +39,11 @@ export class NotificacionesPage implements OnInit {
 
 
   redirectChat(notificacion: any){
-    console.log(notificacion)
     const requestBody = {
 
     };
+
+    this.navCtrl.navigateForward('/mensajeria/'+notificacion.id_paciente);
   }
 
 

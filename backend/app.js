@@ -416,8 +416,8 @@ app.get('/pacientes/:id', (req, res) => {
   });
 });
 
-app.get('/notificaciones', (req, res) => {
-  const idMedico = req.body.id;
+app.get('/notificaciones/:id', (req, res) => {
+  const idMedico = req.params.id;
 
   const query = `
     SELECT n.*, p.nombre AS nombrePaciente
