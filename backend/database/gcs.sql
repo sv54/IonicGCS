@@ -140,16 +140,45 @@ INSERT INTO `mensajes` (`Id`, `fk_medico`, `fk_paciente`, `Remitente`, `Mensaje`
 
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `notificaciones`
---
-
 CREATE TABLE `notificaciones` (
-  `Id` int(11) NOT NULL,
-  `fk_medico` int(11) NOT NULL,
-  `fk_mensaje` int(11) NOT NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_paciente` int(11) NOT NULL,
+  `id_medico` int(11) NOT NULL,
+  `hora` datetime NOT NULL,
+  `texto` text NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (1, 4, '2023-06-10 08:00:00', 'Estimado Dr. López, quisiera programar una consulta para discutir mis síntomas recientes.');
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (2, 5, '2023-06-11 14:30:00', 'Hola Dr. Rodríguez, tengo algunas preguntas sobre los resultados de mis análisis de sangre.');
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (1, 5, '2023-06-12 09:15:00', 'Dr. Smith, necesito renovar mi receta médica. ¿Podría proporcionarme una nueva?');
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (2, 5, '2023-06-13 16:45:00', 'Querido Dr. García, me gustaría discutir los efectos secundarios de mi medicamento actual.');
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (3, 5, '2023-06-14 11:00:00', 'Dr. Lee, necesito su consejo sobre un plan de alimentación saludable para controlar mi diabetes.');
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (4, 5, '2023-06-15 09:30:00', 'Hola Dr. Rodríguez, me gustaría cambiar mi cita programada para la próxima semana.');
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (5, 5, '2023-06-16 13:15:00', 'Dr. Smith, ¿podría recomendarme un especialista para una segunda opinión médica?');
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (8, 5, '2023-06-16 14:30:00', 'Estimado Dr. García, ¿podría proporcionarme un informe médico detallado sobre mi condición actual?');
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (9, 5, '2023-06-16 10:45:00', 'Dr. Lee, tengo programada una cirugía la próxima semana. ¿Cuáles son las precauciones que debo tomar?');
+
+INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
+VALUES (10, 6, '2023-06-16 11:30:00', 'Hola Dr. Rodríguez, ¿podría recomendarme algún libro sobre salud y bienestar?');
 
 -- --------------------------------------------------------
 
@@ -158,45 +187,75 @@ CREATE TABLE `notificaciones` (
 --
 
 CREATE TABLE `pacientes` (
-  `Id` int(11) NOT NULL,
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(32) NOT NULL,
   `Email` varchar(32) NOT NULL,
   `DNI` varchar(32) NOT NULL,
   `FechaNac` date NOT NULL,
   `Password` varchar(32) NOT NULL,
-  `fk_medico` int(11) NOT NULL
+  `observaciones` text NOT NULL,
+  `fk_medico` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `Email` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `pacientes` (`Id`, `Nombre`, `Email`, `DNI`, `FechaNac`, `Password`, `fk_medico`) VALUES
-(1, 'David Martinez', 'david@example.com', '65456321T', '1990-01-01', 'laContraseña', 5),
-(2, 'María López', 'maria@example.com', '98765432B', '1985-05-10', 'miContraseña', 5),
-(3, 'Pedro Gómez', 'pedro@example.com', '54321678C', '1995-09-15', 'otraContraseña', 5),
-(4, 'Ana García', 'ana@example.com', '87654321D', '1992-07-20', 'miOtraContraseña', 6),
-(5, 'Carlos Rodríguez', 'carlos@example.com', '56781234E', '1988-04-05', 'miUltimaContraseña', 6),
-(6, 'Laura Martínez', 'laura@example.com', '43218765F', '1993-11-12', 'miOtraUltimaContraseña', 5),
-(7, 'Roberto Sánchez', 'roberto@example.com', '87654321G', '1990-08-25', 'laUltimaContraseña', 7),
-(8, 'SofíaFernández', 'sofia@example.com', '76543218H', '1987-03-15', 'miContraseñaSegura', 8),
-(9, 'Juan Pérez', 'juanperez@example.com', '12345678A', '1990-01-01', 'password1', 5),
-(10, 'María González', 'mariagonzalez@example.com', '23456789B', '1990-02-01', 'password2', 5),
-(11, 'Luis Fernández', 'luisfernandez@example.com', '34567890C', '1990-03-01', 'password3', 5),
-(12, 'Ana Rodríguez', 'anarodriguez@example.com', '45678901D', '1990-04-01', 'password4', 6),
-(13, 'Carlos Sánchez', 'carlossanchez@example.com', '56789012E', '1990-05-01', 'password5', 5),
-(14, 'Laura López', 'lauralopez@example.com', '67890123F', '1990-06-01', 'password6', 5),
-(15, 'Pedro Martínez', 'pedromartinez@example.com', '78901234G', '1990-07-01', 'password7', 5),
-(16, 'Isabel Torres', 'isabeltorres@example.com', '89012345H', '1990-08-01', 'password8', 5),
-(17, 'Sergio Ramírez', 'sergioramirez@example.com', '90123456J', '1990-09-01', 'password9', 5),
-(18, 'Elena Castro', 'elenacastro@example.com', '01234567K', '1990-10-01', 'password10', 5),
-(19, 'Mario Herrera', 'marioherrera@example.com', '12345678L', '1990-11-01', 'password11', 6),
-(20, 'Silvia Núñez', 'silvianunez@example.com', '23456789M', '1990-12-01', 'password12', 6),
-(21, 'Hugo Rojas', 'hugorojas@example.com', '34567890N', '1991-01-01', 'password13', 6),
-(22, 'Carolina León', 'carolinaleon@example.com', '45678901P', '1991-02-01', 'password14', 6),
-(23, 'Fernando Méndez', 'fernandomendez@example.com', '56789012Q', '1991-03-01', 'password15', 6),
-(24, 'Gabriela Silva', 'gabrielasilva@example.com', '67890123R', '1991-04-01', 'password16', 6),
-(25, 'Diego Vargas', 'diegovargas@example.com', '78901234S', '1991-05-01', 'password17', 6),
-(26, 'Valentina Cordero', 'valentinacordero@example.com', '89012345T', '1991-06-01', 'password18', 6),
-(27, 'Jorge Rojas', 'jorgerojas@example.com', '90123456U', '1991-07-01', 'password19', 6),
-(28, 'Marcela Pérez', 'marcelaperez@example.com', '01234567V', '1991-08-01', 'password20', 6);
 
+INSERT INTO `pacientes` (`Id`, `Nombre`, `Email`, `DNI`, `FechaNac`, `Password`, `observaciones`, `fk_medico`) VALUES
+(1, 'David Martinez', 'david@example.com', '65456321T', '1990-01-01', 'laContraseña', 'Ninguna', 5),
+(2, 'María López', 'maria@example.com', '98765432B', '1985-05-10', 'miContraseña', 'Alergia a los frutos secos', 5),
+(3, 'Pedro Gómez', 'pedro@example.com', '54321678C', '1995-09-15', 'otraContraseña', 'Asma', 5),
+(4, 'Ana García', 'ana@example.com', '87654321D', '1992-07-20', 'miOtraContraseña', 'Hipertensión', 6),
+(5, 'Carlos Rodríguez', 'carlos@example.com', '56781234E', '1988-04-05', 'miUltimaContraseña', 'Ninguna', 6),
+(6, 'Laura Martínez', 'laura@example.com', '43218765F', '1993-11-12', 'miOtraUltimaContraseña', 'Diabetes tipo 2', 5),
+(7, 'Roberto Sánchez', 'roberto@example.com', '87654321G', '1990-08-25', 'laUltimaContraseña', 'Ninguna', 7),
+(8, 'SofíaFernández', 'sofia@example.com', '76543218H', '1987-03-15', 'miContraseñaSegura', 'Ninguna', 8),
+(9, 'Juan Pérez', 'juanperez@example.com', '12345678A', '1990-01-01', 'password1', 'Ninguna', 5),
+(10, 'María González', 'mariagonzalez@example.com', '23456789B', '1990-02-01', 'password2', 'Alergia al polen', 5),
+(11, 'Luis Fernández', 'luisfernandez@example.com', '34567890C', '1990-03-01', 'password3', 'Intolerancia a la lactosa', 5),
+(12, 'Ana Rodríguez', 'anarodriguez@example.com', '45678901D', '1990-04-01', 'password4', 'Ninguna', 6),
+(13, 'Carlos Sánchez', 'carlossanchez@example.com', '56789012E', '1990-05-01', 'password5', 'Asma', 5),
+(14, 'Laura López', 'lauralopez@example.com', '67890123F', '1990-06-01', 'password6', 'Ninguna', 5),
+(15, 'Pedro Martínez', 'pedromartinez@example.com', '78901234G', '1990-07-01', 'password7', 'Ninguna', 5),
+(16, 'Isabel Torres', 'isabeltorres@example.com', '89012345H', '1990-08-01', 'password8', 'Alergia al marisco', 5),
+(17, 'Sergio Ramírez', 'sergioramirez@example.com', '90123456J', '1990-09-01', 'password9', 'Ninguna', 5),
+(18, 'Elena Castro', 'elenacastro@example.com', '01234567K', '1990-10-01', 'password10', 'Ninguna', 5),
+(19, 'Mario Herrera', 'marioherrera@example.com', '12345678L', '1990-11-01', 'password11', 'Ninguna', 6),
+(20, 'Silvia Núñez', 'silvianunez@example.com', '23456789M', '1990-12-01', 'password12', 'Ninguna', 6),
+(21, 'Hugo Rojas', 'hugorojas@example.com', '34567890N', '1991-01-01', 'password13', 'Ninguna', 6),
+(22, 'Carolina León', 'carolinaleon@example.com', '45678901P', '1991-02-01', 'password14', 'Ninguna', 6),
+(23, 'Fernando Méndez', 'fernandomendez@example.com', '56789012Q', '1991-03-01', 'password15', 'Ninguna', 6),
+(24, 'Gabriela Silva', 'gabrielasilva@example.com', '67890123R', '1991-04-01', 'password16', 'Ninguna', 6),
+(25, 'Diego Vargas', 'diegovargas@example.com', '78901234S', '1991-05-01', 'password17', 'Ninguna', 6),
+(26, 'Valentina Cordero', 'valentinacordero@example.com', '89012345T', '1991-06-01', 'password18', 'Ninguna', 6),
+(27, 'Jorge Rojas', 'jorgerojas@example.com', '90123456U', '1991-07-01', 'password19', 'Ninguna', 6),
+(28, 'Marcela Pérez', 'marcelaperez@example.com', '01234567V', '1991-08-01', 'password20', 'Ninguna', 6);
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
+VALUES (1, 'Paracetamol', '2023-06-10', '2023-06-20', '3 veces al día', 'Tomar con comida', 1);
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
+VALUES (2, 'Amoxicilina', '2023-06-11', '2023-06-21', '2 veces al día', 'Tomar con abundante agua', 2);
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
+VALUES (3, 'Ibuprofeno', '2023-06-12', '2023-06-22', '3 veces al día', 'No exceder la dosis recomendada', 3);
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
+VALUES (4, 'Omeprazol', '2023-06-13', '2023-06-23', '1 vez al día', 'Tomar en ayunas', 4);
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
+VALUES (5, 'Loratadina', '2023-06-14', '2023-06-24', '1 vez al día', 'Tomar antes de dormir', 5);
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
+VALUES (6, 'Simvastatina', '2023-06-15', '2023-06-25', '1 vez al día', 'Tomar con alimentos', 6);
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
+VALUES (7, 'Metformina', '2023-06-16', '2023-06-26', '2 veces al día', 'Tomar con comida', 7);
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
+VALUES (8, 'Losartan', '2023-06-17', '2023-06-27', '1 vez al día', 'Tomar a la misma hora todos los días', 8);
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
+VALUES (9, 'Warfarina', '2023-06-18', '2023-06-28', '1 vez al día', 'Seguir las indicaciones del médico', 9);
 
 --
 -- Indexes for dumped tables
@@ -225,26 +284,6 @@ ALTER TABLE `mensajes`
   ADD KEY `fk_mensajes_pacientes` (`fk_paciente`);
 
 --
--- Indexes for table `notificaciones`
---
-ALTER TABLE `notificaciones`
-  ADD PRIMARY KEY (`Id`),
-  ADD KEY `fk_notificaciones_medicos` (`fk_medico`),
-  ADD KEY `fk_notificaciones_mensajes` (`fk_mensaje`);
-
---
--- Indexes for table `pacientes`
---
-ALTER TABLE `pacientes`
-  ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Email` (`Email`),
-  ADD KEY `fk_pacientes_medicos` (`fk_medico`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
 -- AUTO_INCREMENT for table `medicamentos`
 --
 ALTER TABLE `medicamentos`
@@ -263,47 +302,11 @@ ALTER TABLE `mensajes`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `notificaciones`
---
-ALTER TABLE `notificaciones`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `pacientes`
---
-ALTER TABLE `pacientes`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `medicamentos`
---
-ALTER TABLE `medicamentos`
-  ADD CONSTRAINT `fk_medicamentos_pacientes` FOREIGN KEY (`fk_paciente`) REFERENCES `pacientes` (`Id`);
-
---
 -- Constraints for table `mensajes`
 --
 ALTER TABLE `mensajes`
   ADD CONSTRAINT `fk_mensajes_medicos` FOREIGN KEY (`fk_medico`) REFERENCES `medicos` (`Id`),
   ADD CONSTRAINT `fk_mensajes_pacientes` FOREIGN KEY (`fk_paciente`) REFERENCES `pacientes` (`Id`);
-
---
--- Constraints for table `notificaciones`
---
-ALTER TABLE `notificaciones`
-  ADD CONSTRAINT `fk_notificaciones_medicos` FOREIGN KEY (`fk_medico`) REFERENCES `medicos` (`Id`),
-  ADD CONSTRAINT `fk_notificaciones_mensajes` FOREIGN KEY (`fk_mensaje`) REFERENCES `mensajes` (`Id`);
-
---
--- Constraints for table `pacientes`
---
-ALTER TABLE `pacientes`
-  ADD CONSTRAINT `fk_pacientes_medicos` FOREIGN KEY (`fk_medico`) REFERENCES `medicos` (`Id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
