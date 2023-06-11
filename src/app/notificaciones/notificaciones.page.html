@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      Pacientes
+      Notificaciones
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -24,7 +24,8 @@
           <ion-col size="10">
             <ion-label>
               <h2>{{notificacion.Nombre}}</h2>
-              <p>{{notificacion.texto}}</p>
+              <p>{{ notificacion.texto | slice:0:50 }}</p>
+              <p>{{ notificacion.hora | date:'yyyy-MM-dd' }}</p>
             </ion-label>
           </ion-col>
         </ion-row>

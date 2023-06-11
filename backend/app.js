@@ -9,8 +9,8 @@ app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const connection = mysql.createConnection({
   // //@Serhii
-  host: '192.168.1.122',
-  user: 'Desktop2',
+  //host: '192.168.1.122',
+  //user: 'Desktop2',
   // @Angel
   //user: 'dss',
   //password: '12345678',
@@ -18,8 +18,8 @@ const connection = mysql.createConnection({
   //user: 'root',
   //password: 'root',
   // @Nikita
-  // user: 'root',
-  // password: '',
+  user: 'root',
+  password: '',
   database: 'gcs'
 });
 app.use(cors()); // Habilitar CORS para todas las rutas
