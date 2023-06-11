@@ -12,6 +12,7 @@ const connection = mysql.createConnection({
   //host: '192.168.1.122',
   //user: 'Desktop2',
   // @Angel
+  //host: 'localhost',
   //user: 'dss',
   //password: '12345678',
   // @David
