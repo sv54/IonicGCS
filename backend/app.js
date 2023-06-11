@@ -419,13 +419,18 @@ app.get('/pacientes/:id', (req, res) => {
 app.get('/notificaciones', (req, res) => {
   const idMedico = req.body.id;
 
-  const query = `SELECT * FROM notificaciones WHERE id_medico = ${idMedico}`;
+  const query = `
+    SELECT n.*, p.nombre AS nombrePaciente
+    FROM notificaciones AS n
+    JOIN pacientes AS p ON n.id_paciente = p.id
+    WHERE n.id_medico = ${idMedico}
+  `;
+
   connection.query(query, (error, results, fields) => {
     if (error) {
       console.error(error);
       res.status(500).send('Error al obtener notificaciones');
     } else {
-      const notificaciones = results;
       res.json(results);
     }
   });
