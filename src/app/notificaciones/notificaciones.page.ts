@@ -11,24 +11,29 @@ import { StorageService } from '../storage.service';
 export class NotificacionesPage implements OnInit {
 
   notificaciones: any = []
-
+  medicoId: any;
 
   constructor(private router: Router, private storage: StorageService, private http: HttpClient) { }
 
   ngOnInit() {
+    this.getNotificaciones()
   }
 
-  async getNotificaciones(){
-    let idMedico =
-    await this.storage.get('dni')?.then((value) => {
-      this.http.get('http://localhost:3000/notificaciones')
-      .subscribe(data => {
+  async getNotificaciones() {
+    console.log("fetching");
+    this.medicoId = await this.storage.get('id')?.then((value) => {
 
-      })
-      idMedico = value;
-    })
-
-
+    this.http.get<any[]>('http://localhost:3000/notificaciones/'+value)
+      .subscribe(
+        data => {
+          this.notificaciones = data;
+          console.log('Notificaciones:', this.notificaciones);
+        },
+        error => {
+          console.error('Failed to fetch notificaciones:', error);
+        }
+      );
+    });
   }
 
 
