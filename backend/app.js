@@ -9,9 +9,8 @@ app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const connection = mysql.createConnection({
   // //@Serhii
-  // host: '192.168.1.122',
-  // user: 'Desktop2',
-  // host: 'localhost',
+  host: '192.168.1.122',
+  user: 'Desktop2',
   // @Angel
   //user: 'dss',
   //password: '12345678',
@@ -19,8 +18,8 @@ const connection = mysql.createConnection({
   //user: 'root',
   //password: 'root',
   // @Nikita
-  user: 'root',
-  password: '',
+  // user: 'root',
+  // password: '',
   database: 'gcs'
 });
 app.use(cors()); // Habilitar CORS para todas las rutas
@@ -428,6 +427,21 @@ app.get('/notificaciones', (req, res) => {
     } else {
       const notificaciones = results;
       res.json(results);
+    }
+  });
+});
+
+app.delete('/notificaciones/:id', (req, res) => {
+  const idNotificacion = req.params.id;
+
+  const query = `Delete FROM notificaciones WHERE id = ${idNotificacion}`;
+  connection.query(query, (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Error al borrar notificaciones');
+    } else {
+      const notificaciones = results;
+      res.json("ok");
     }
   });
 });
