@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2023 at 06:50 PM
+-- Generation Time: Jun 15, 2023 at 06:52 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `gcs`
 --
-CREATE DATABASE IF NOT EXISTS gcs;
-USE gcs;
 
 -- --------------------------------------------------------
 
@@ -38,6 +36,21 @@ CREATE TABLE `medicamentos` (
   `Detalles` text NOT NULL,
   `fk_paciente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `medicamentos`
+--
+
+INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`) VALUES
+(1, 'Paracetamol', '2023-06-10', '2023-06-20', '3 veces al ', 'Tomar con comida', 1),
+(2, 'Amoxicilina', '2023-06-11', '2023-06-21', '2 veces al ', 'Tomar con abundante agua', 2),
+(3, 'Ibuprofeno', '2023-06-12', '2023-06-22', '3 veces al ', 'No exceder la dosis recomendada', 3),
+(4, 'Omeprazol', '2023-06-13', '2023-06-23', '1 vez al dí', 'Tomar en ayunas', 4),
+(5, 'Loratadina', '2023-06-14', '2023-06-24', '1 vez al dí', 'Tomar antes de dormir', 5),
+(6, 'Simvastatina', '2023-06-15', '2023-06-25', '1 vez al dí', 'Tomar con alimentos', 6),
+(7, 'Metformina', '2023-06-16', '2023-06-26', '2 veces al ', 'Tomar con comida', 7),
+(8, 'Losartan', '2023-06-17', '2023-06-27', '1 vez al dí', 'Tomar a la misma hora todos los días', 8),
+(9, 'Warfarina', '2023-06-18', '2023-06-28', '1 vez al dí', 'Seguir las indicaciones del médico', 9);
 
 -- --------------------------------------------------------
 
@@ -74,10 +87,14 @@ CREATE TABLE `mensajes` (
   `Id` int(11) NOT NULL,
   `fk_medico` int(11) NOT NULL,
   `fk_paciente` int(11) NOT NULL,
-  `Remitente` TINYINT(1),
+  `Remitente` tinyint(1) DEFAULT NULL,
   `Mensaje` text NOT NULL,
   `FechaHora` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `mensajes`
+--
 
 INSERT INTO `mensajes` (`Id`, `fk_medico`, `fk_paciente`, `Remitente`, `Mensaje`, `FechaHora`) VALUES
 (1, 5, 1, 1, 'Hola, ¿cómo te sientes?', '2023-06-01 10:30:00'),
@@ -138,47 +155,35 @@ INSERT INTO `mensajes` (`Id`, `fk_medico`, `fk_paciente`, `Remitente`, `Mensaje`
 (60, 5, 17, 0, 'Mi calidad de sueño ha mejorado, gracias a tus consejos.', '2023-06-05 11:09:19'),
 (61, 5, 1, 1, 'Estimado paciente, espero que este mensaje le encuentre bien. Me gustaría brindarle información detallada sobre su condición de salud y el tratamiento recomendado. Según los resultados de sus exámenes médicos, hemos identificado algunos aspectos que requieren atención. Es importante seguir las indicaciones y pautas que le proporcionaremos para lograr una mejoría en su estado de salud. Recuerde tomar los medicamentos prescritos de acuerdo a las indicaciones y realizar las consultas de seguimiento programadas. Si tiene alguna pregunta o inquietud, no dude en comunicarse con nosotros. Estamos aquí para brindarle el apoyo necesario en su proceso de recuperación. Atentamente, Dr. Jogn Smith.', '2023-06-05 11:09:20');
 
-
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `notificaciones`
+--
+
 CREATE TABLE `notificaciones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `id_paciente` int(11) NOT NULL,
   `id_medico` int(11) NOT NULL,
   `hora` datetime NOT NULL,
-  `texto` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `texto` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `notificaciones`
+--
 
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (1, 4, '2023-06-10 08:00:00', 'Estimado Dr. López, quisiera programar una consulta para discutir mis síntomas recientes.');
-
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (2, 5, '2023-06-11 14:30:00', 'Hola Dr. Rodríguez, tengo algunas preguntas sobre los resultados de mis análisis de sangre.');
-
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (1, 5, '2023-06-12 09:15:00', 'Dr. Smith, necesito renovar mi receta médica. ¿Podría proporcionarme una nueva?');
-
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (2, 5, '2023-06-13 16:45:00', 'Querido Dr. García, me gustaría discutir los efectos secundarios de mi medicamento actual.');
-
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (3, 5, '2023-06-14 11:00:00', 'Dr. Lee, necesito su consejo sobre un plan de alimentación saludable para controlar mi diabetes.');
-
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (4, 5, '2023-06-15 09:30:00', 'Hola Dr. Rodríguez, me gustaría cambiar mi cita programada para la próxima semana.');
-
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (5, 5, '2023-06-16 13:15:00', 'Dr. Smith, ¿podría recomendarme un especialista para una segunda opinión médica?');
-
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (8, 5, '2023-06-16 14:30:00', 'Estimado Dr. García, ¿podría proporcionarme un informe médico detallado sobre mi condición actual?');
-
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (9, 5, '2023-06-16 10:45:00', 'Dr. Lee, tengo programada una cirugía la próxima semana. ¿Cuáles son las precauciones que debo tomar?');
-
-INSERT INTO `notificaciones` (`id_paciente`, `id_medico`, `hora`, `texto`)
-VALUES (10, 6, '2023-06-16 11:30:00', 'Hola Dr. Rodríguez, ¿podría recomendarme algún libro sobre salud y bienestar?');
+INSERT INTO `notificaciones` (`id`, `id_paciente`, `id_medico`, `hora`, `texto`) VALUES
+(1, 1, 4, '2023-06-10 08:00:00', 'Estimado Dr. López, quisiera programar una consulta para discutir mis síntomas recientes.'),
+(2, 2, 5, '2023-06-11 14:30:00', 'Hola Dr. Rodríguez, tengo algunas preguntas sobre los resultados de mis análisis de sangre.'),
+(3, 1, 5, '2023-06-12 09:15:00', 'Dr. Smith, necesito renovar mi receta médica. ¿Podría proporcionarme una nueva?'),
+(4, 2, 5, '2023-06-13 16:45:00', 'Querido Dr. García, me gustaría discutir los efectos secundarios de mi medicamento actual.'),
+(5, 3, 5, '2023-06-14 11:00:00', 'Dr. Lee, necesito su consejo sobre un plan de alimentación saludable para controlar mi diabetes.'),
+(6, 4, 5, '2023-06-15 09:30:00', 'Hola Dr. Rodríguez, me gustaría cambiar mi cita programada para la próxima semana.'),
+(7, 5, 5, '2023-06-16 13:15:00', 'Dr. Smith, ¿podría recomendarme un especialista para una segunda opinión médica?'),
+(8, 8, 5, '2023-06-16 14:30:00', 'Estimado Dr. García, ¿podría proporcionarme un informe médico detallado sobre mi condición actual?'),
+(9, 9, 5, '2023-06-16 10:45:00', 'Dr. Lee, tengo programada una cirugía la próxima semana. ¿Cuáles son las precauciones que debo tomar?'),
+(10, 10, 6, '2023-06-16 11:30:00', 'Hola Dr. Rodríguez, ¿podría recomendarme algún libro sobre salud y bienestar?');
 
 -- --------------------------------------------------------
 
@@ -187,18 +192,19 @@ VALUES (10, 6, '2023-06-16 11:30:00', 'Hola Dr. Rodríguez, ¿podría recomendar
 --
 
 CREATE TABLE `pacientes` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `Nombre` varchar(32) NOT NULL,
   `Email` varchar(32) NOT NULL,
   `DNI` varchar(32) NOT NULL,
   `FechaNac` date NOT NULL,
   `Password` varchar(32) NOT NULL,
-  `observaciones` text NOT NULL,
-  `fk_medico` int(11) NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Email` (`Email`)
+  `observaciones` text NOT NULL DEFAULT 'Ninguna',
+  `fk_medico` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `pacientes`
+--
 
 INSERT INTO `pacientes` (`Id`, `Nombre`, `Email`, `DNI`, `FechaNac`, `Password`, `observaciones`, `fk_medico`) VALUES
 (1, 'David Martinez', 'david@example.com', '65456321T', '1990-01-01', 'laContraseña', 'Ninguna', 5),
@@ -230,33 +236,6 @@ INSERT INTO `pacientes` (`Id`, `Nombre`, `Email`, `DNI`, `FechaNac`, `Password`,
 (27, 'Jorge Rojas', 'jorgerojas@example.com', '90123456U', '1991-07-01', 'password19', 'Ninguna', 6),
 (28, 'Marcela Pérez', 'marcelaperez@example.com', '01234567V', '1991-08-01', 'password20', 'Ninguna', 6);
 
-INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
-VALUES (1, 'Paracetamol', '2023-06-10', '2023-06-20', '3 veces al día', 'Tomar con comida', 1);
-
-INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
-VALUES (2, 'Amoxicilina', '2023-06-11', '2023-06-21', '2 veces al día', 'Tomar con abundante agua', 2);
-
-INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
-VALUES (3, 'Ibuprofeno', '2023-06-12', '2023-06-22', '3 veces al día', 'No exceder la dosis recomendada', 3);
-
-INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
-VALUES (4, 'Omeprazol', '2023-06-13', '2023-06-23', '1 vez al día', 'Tomar en ayunas', 4);
-
-INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
-VALUES (5, 'Loratadina', '2023-06-14', '2023-06-24', '1 vez al día', 'Tomar antes de dormir', 5);
-
-INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
-VALUES (6, 'Simvastatina', '2023-06-15', '2023-06-25', '1 vez al día', 'Tomar con alimentos', 6);
-
-INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
-VALUES (7, 'Metformina', '2023-06-16', '2023-06-26', '2 veces al día', 'Tomar con comida', 7);
-
-INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
-VALUES (8, 'Losartan', '2023-06-17', '2023-06-27', '1 vez al día', 'Tomar a la misma hora todos los días', 8);
-
-INSERT INTO `medicamentos` (`Id`, `Nombre`, `FechaInicio`, `FechaFin`, `VecesDia`, `Detalles`, `fk_paciente`)
-VALUES (9, 'Warfarina', '2023-06-18', '2023-06-28', '1 vez al día', 'Seguir las indicaciones del médico', 9);
-
 --
 -- Indexes for dumped tables
 --
@@ -284,10 +263,27 @@ ALTER TABLE `mensajes`
   ADD KEY `fk_mensajes_pacientes` (`fk_paciente`);
 
 --
+-- Indexes for table `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pacientes`
+--
+ALTER TABLE `pacientes`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Email` (`Email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
 -- AUTO_INCREMENT for table `medicamentos`
 --
 ALTER TABLE `medicamentos`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `medicos`
@@ -299,7 +295,23 @@ ALTER TABLE `medicos`
 -- AUTO_INCREMENT for table `mensajes`
 --
 ALTER TABLE `mensajes`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+
+--
+-- AUTO_INCREMENT for table `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `pacientes`
+--
+ALTER TABLE `pacientes`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- Constraints for dumped tables
+--
 
 --
 -- Constraints for table `mensajes`
@@ -307,6 +319,7 @@ ALTER TABLE `mensajes`
 ALTER TABLE `mensajes`
   ADD CONSTRAINT `fk_mensajes_medicos` FOREIGN KEY (`fk_medico`) REFERENCES `medicos` (`Id`),
   ADD CONSTRAINT `fk_mensajes_pacientes` FOREIGN KEY (`fk_paciente`) REFERENCES `pacientes` (`Id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -32,6 +32,6 @@ export class ObservacionesEditarPage implements OnInit {
     } catch (error) {
       //console.error('Failed to update observaciones:', error);
     }
-    this.navCtrl.navigateRoot(["paciente/" + this.patient.DNI]);
+    this.navCtrl.navigateForward('/paciente/'+this.patient.DNI);
   }
 }
